@@ -12,47 +12,47 @@ namespace Software_Requirement_Specification.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LopHocsController : ControllerBase
+    public class TaiKhoansController : ControllerBase
     {
         private readonly Software_Requirement_SpecificationContext _context;
 
-        public LopHocsController(Software_Requirement_SpecificationContext context)
+        public TaiKhoansController(Software_Requirement_SpecificationContext context)
         {
             _context = context;
         }
 
-        // GET: api/LopHocs
+        // GET: api/TaiKhoans
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<LopHoc>>> GetLopHoc()
+        public async Task<ActionResult<IEnumerable<TaiKhoan>>> GetTaiKhoan()
         {
-            return await _context.LopHoc.ToListAsync();
+            return await _context.TaiKhoan.ToListAsync();
         }
 
-        // GET: api/LopHocs/5
+        // GET: api/TaiKhoans/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<LopHoc>> GetLopHoc(int id)
+        public async Task<ActionResult<TaiKhoan>> GetTaiKhoan(int id)
         {
-            var lopHoc = await _context.LopHoc.FindAsync(id);
+            var taiKhoan = await _context.TaiKhoan.FindAsync(id);
 
-            if (lopHoc == null)
+            if (taiKhoan == null)
             {
                 return NotFound();
             }
 
-            return lopHoc;
+            return taiKhoan;
         }
 
-        // PUT: api/LopHocs/5
+        // PUT: api/TaiKhoans/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLopHoc(int id, LopHoc lopHoc)
+        public async Task<IActionResult> PutTaiKhoan(int id, TaiKhoan taiKhoan)
         {
-            if (id != lopHoc.Id)
+            if (id != taiKhoan.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(lopHoc).State = EntityState.Modified;
+            _context.Entry(taiKhoan).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace Software_Requirement_Specification.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!LopHocExists(id))
+                if (!TaiKhoanExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace Software_Requirement_Specification.Controllers
             return NoContent();
         }
 
-        // POST: api/LopHocs
+        // POST: api/TaiKhoans
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<LopHoc>> PostLopHoc(LopHoc lopHoc)
+        public async Task<ActionResult<TaiKhoan>> PostTaiKhoan([FromBody] TaiKhoan taiKhoan)
         {
-            _context.LopHoc.Add(lopHoc);
+            _context.TaiKhoan.Add(taiKhoan);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetLopHoc", new { id = lopHoc.Id }, lopHoc);
+            return CreatedAtAction("GetTaiKhoan", new { id = taiKhoan.Id }, taiKhoan);
         }
 
-        // DELETE: api/LopHocs/5
+        // DELETE: api/TaiKhoans/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLopHoc(int id)
+        public async Task<IActionResult> DeleteTaiKhoan(int id)
         {
-            var lopHoc = await _context.LopHoc.FindAsync(id);
-            if (lopHoc == null)
+            var taiKhoan = await _context.TaiKhoan.FindAsync(id);
+            if (taiKhoan == null)
             {
                 return NotFound();
             }
 
-            _context.LopHoc.Remove(lopHoc);
+            _context.TaiKhoan.Remove(taiKhoan);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool LopHocExists(int id)
+        private bool TaiKhoanExists(int id)
         {
-            return _context.LopHoc.Any(e => e.Id == id);
+            return _context.TaiKhoan.Any(e => e.Id == id);
         }
     }
 }

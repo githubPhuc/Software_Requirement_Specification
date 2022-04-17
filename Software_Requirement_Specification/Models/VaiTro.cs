@@ -10,22 +10,20 @@ namespace Software_Requirement_Specification.Models
     {
         [Key]
         public int Id { get; set; }
+        [Display(Name ="Mã người dùng")]
+        public string MaNguoiDung { get; set; }
         [Display(Name ="Tên người dùng")]
-        public int NguoiDung { get; set; }
+        public string NguoiDung { get; set; }
         [Display(Name = "Tên vai trò")]
         public string TenVaiTro { get; set; }
         [Display(Name = "Mô tả")]
         public string MoTa { get; set; }
-        [Display(Name = "MonHoc")]
-        public MonHoc MonHoc { get; set; }
-
-        public Tep TepRiengTu { get; set; }
-
-        public TaiLieu TaiNguyen { get; set; }
-
-        public DeThi De { get; set; }
-
+        public int IdTaiKhoan { get; set; }
         public string ThongBao { get; set; }
-        public TaiKhoan taiKhoan { get; set; }
+        public TaiKhoan taikhoan { get; set; }
+        public Tep TepRiengTu { get; set; }
+        public List<MonHoc> monHocs { get; set; }
+        public List<DeThi> De { get; set; }
+
     }
 }

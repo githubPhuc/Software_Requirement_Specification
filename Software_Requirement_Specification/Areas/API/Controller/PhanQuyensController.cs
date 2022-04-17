@@ -12,47 +12,47 @@ namespace Software_Requirement_Specification.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VaiTroesController : ControllerBase
+    public class PhanQuyensController : ControllerBase
     {
         private readonly Software_Requirement_SpecificationContext _context;
 
-        public VaiTroesController(Software_Requirement_SpecificationContext context)
+        public PhanQuyensController(Software_Requirement_SpecificationContext context)
         {
             _context = context;
         }
 
-        // GET: api/VaiTroes
+        // GET: api/PhanQuyens
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<VaiTro>>> GetVaiTro()
+        public async Task<ActionResult<IEnumerable<PhanQuyen>>> GetPhanQuyen()
         {
-            return await _context.VaiTro.ToListAsync();
+            return await _context.PhanQuyen.ToListAsync();
         }
 
-        // GET: api/VaiTroes/5
+        // GET: api/PhanQuyens/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<VaiTro>> GetVaiTro(int id)
+        public async Task<ActionResult<PhanQuyen>> GetPhanQuyen(int id)
         {
-            var vaiTro = await _context.VaiTro.FindAsync(id);
+            var phanQuyen = await _context.PhanQuyen.FindAsync(id);
 
-            if (vaiTro == null)
+            if (phanQuyen == null)
             {
                 return NotFound();
             }
 
-            return vaiTro;
+            return phanQuyen;
         }
 
-        // PUT: api/VaiTroes/5
+        // PUT: api/PhanQuyens/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutVaiTro(int id, VaiTro vaiTro)
+        public async Task<IActionResult> PutPhanQuyen(int id, [FromBody] PhanQuyen phanQuyen)
         {
-            if (id != vaiTro.Id)
+            if (id != phanQuyen.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(vaiTro).State = EntityState.Modified;
+            _context.Entry(phanQuyen).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace Software_Requirement_Specification.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!VaiTroExists(id))
+                if (!PhanQuyenExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace Software_Requirement_Specification.Controllers
             return NoContent();
         }
 
-        // POST: api/VaiTroes
+        // POST: api/PhanQuyens
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<VaiTro>> PostVaiTro(VaiTro vaiTro)
+        public async Task<ActionResult<PhanQuyen>> PostPhanQuyen([FromBody] PhanQuyen phanQuyen)
         {
-            _context.VaiTro.Add(vaiTro);
+            _context.PhanQuyen.Add(phanQuyen);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetVaiTro", new { id = vaiTro.Id }, vaiTro);
+            return CreatedAtAction("GetPhanQuyen", new { id = phanQuyen.Id }, phanQuyen);
         }
 
-        // DELETE: api/VaiTroes/5
+        // DELETE: api/PhanQuyens/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteVaiTro(int id)
+        public async Task<IActionResult> DeletePhanQuyen(int id)
         {
-            var vaiTro = await _context.VaiTro.FindAsync(id);
-            if (vaiTro == null)
+            var phanQuyen = await _context.PhanQuyen.FindAsync(id);
+            if (phanQuyen == null)
             {
                 return NotFound();
             }
 
-            _context.VaiTro.Remove(vaiTro);
+            _context.PhanQuyen.Remove(phanQuyen);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool VaiTroExists(int id)
+        private bool PhanQuyenExists(int id)
         {
-            return _context.VaiTro.Any(e => e.Id == id);
+            return _context.PhanQuyen.Any(e => e.Id == id);
         }
     }
 }

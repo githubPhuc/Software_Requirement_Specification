@@ -10,7 +10,7 @@ using Software_Requirement_Specification.Data;
 namespace Software_Requirement_Specification.Migrations
 {
     [DbContext(typeof(Software_Requirement_SpecificationContext))]
-    [Migration("20220413100307_migration2")]
+    [Migration("20220415113609_migration2")]
     partial class migration2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,12 @@ namespace Software_Requirement_Specification.Migrations
                     b.Property<bool>("TinhTrang")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("VaiTroId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idMonHoc")
+                        .HasColumnType("int");
+
                     b.Property<int?>("monHocIdId")
                         .HasColumnType("int");
 
@@ -56,6 +62,8 @@ namespace Software_Requirement_Specification.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("VaiTroId");
 
                     b.HasIndex("monHocIdId");
 
@@ -103,12 +111,23 @@ namespace Software_Requirement_Specification.Migrations
                     b.Property<bool>("TinhTrang")
                         .HasColumnType("bit");
 
+                    b.Property<int>("idLopHoc")
+                        .HasColumnType("int");
+
                     b.Property<int?>("lopHocIdId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("maNguoiDung")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("vaiTroId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("lopHocIdId");
+
+                    b.HasIndex("vaiTroId");
 
                     b.ToTable("MonHoc");
                 });
@@ -144,6 +163,9 @@ namespace Software_Requirement_Specification.Migrations
                     b.Property<string>("MatKhau")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Quyen")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("QuyenIDId")
                         .HasColumnType("int");
 
@@ -155,9 +177,6 @@ namespace Software_Requirement_Specification.Migrations
 
                     b.Property<bool>("TrangThai")
                         .HasColumnType("bit");
-
-                    b.Property<int>("VaiTro")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -181,6 +200,9 @@ namespace Software_Requirement_Specification.Migrations
 
                     b.Property<int>("SoTaiLieuChoDuyet")
                         .HasColumnType("int");
+
+                    b.Property<string>("TenMonHoc")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TinhTrang")
                         .HasColumnType("bit");
@@ -264,20 +286,17 @@ namespace Software_Requirement_Specification.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("DeId")
+                    b.Property<int>("IdTaiKhoan")
                         .HasColumnType("int");
+
+                    b.Property<string>("MaNguoiDung")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MoTa")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MonHocId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NguoiDung")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TaiNguyenId")
-                        .HasColumnType("int");
+                    b.Property<string>("NguoiDung")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TenVaiTro")
                         .HasColumnType("nvarchar(max)");
@@ -288,26 +307,24 @@ namespace Software_Requirement_Specification.Migrations
                     b.Property<string>("ThongBao")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("taiKhoanId")
+                    b.Property<int?>("taikhoanId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DeId");
-
-                    b.HasIndex("MonHocId");
-
-                    b.HasIndex("TaiNguyenId");
-
                     b.HasIndex("TepRiengTuId");
 
-                    b.HasIndex("taiKhoanId");
+                    b.HasIndex("taikhoanId");
 
                     b.ToTable("VaiTro");
                 });
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.DeThi", b =>
                 {
+                    b.HasOne("Software_Requirement_Specification.Models.VaiTro", null)
+                        .WithMany("De")
+                        .HasForeignKey("VaiTroId");
+
                     b.HasOne("Software_Requirement_Specification.Models.MonHoc", "monHocId")
                         .WithMany("deThis")
                         .HasForeignKey("monHocIdId");
@@ -336,7 +353,13 @@ namespace Software_Requirement_Specification.Migrations
                         .WithMany("monHocs")
                         .HasForeignKey("lopHocIdId");
 
+                    b.HasOne("Software_Requirement_Specification.Models.VaiTro", "vaiTro")
+                        .WithMany("monHocs")
+                        .HasForeignKey("vaiTroId");
+
                     b.Navigation("lopHocId");
+
+                    b.Navigation("vaiTro");
                 });
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.TaiKhoan", b =>
@@ -366,33 +389,15 @@ namespace Software_Requirement_Specification.Migrations
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.VaiTro", b =>
                 {
-                    b.HasOne("Software_Requirement_Specification.Models.DeThi", "De")
-                        .WithMany()
-                        .HasForeignKey("DeId");
-
-                    b.HasOne("Software_Requirement_Specification.Models.MonHoc", "MonHoc")
-                        .WithMany()
-                        .HasForeignKey("MonHocId");
-
-                    b.HasOne("Software_Requirement_Specification.Models.TaiLieu", "TaiNguyen")
-                        .WithMany()
-                        .HasForeignKey("TaiNguyenId");
-
                     b.HasOne("Software_Requirement_Specification.Models.Tep", "TepRiengTu")
                         .WithMany()
                         .HasForeignKey("TepRiengTuId");
 
-                    b.HasOne("Software_Requirement_Specification.Models.TaiKhoan", "taiKhoan")
-                        .WithMany()
-                        .HasForeignKey("taiKhoanId");
+                    b.HasOne("Software_Requirement_Specification.Models.TaiKhoan", "taikhoan")
+                        .WithMany("vaiTro")
+                        .HasForeignKey("taikhoanId");
 
-                    b.Navigation("De");
-
-                    b.Navigation("MonHoc");
-
-                    b.Navigation("taiKhoan");
-
-                    b.Navigation("TaiNguyen");
+                    b.Navigation("taikhoan");
 
                     b.Navigation("TepRiengTu");
                 });
@@ -414,9 +419,21 @@ namespace Software_Requirement_Specification.Migrations
                     b.Navigation("taiLieus");
                 });
 
+            modelBuilder.Entity("Software_Requirement_Specification.Models.TaiKhoan", b =>
+                {
+                    b.Navigation("vaiTro");
+                });
+
             modelBuilder.Entity("Software_Requirement_Specification.Models.TruongHoc", b =>
                 {
                     b.Navigation("lopHocs");
+                });
+
+            modelBuilder.Entity("Software_Requirement_Specification.Models.VaiTro", b =>
+                {
+                    b.Navigation("De");
+
+                    b.Navigation("monHocs");
                 });
 #pragma warning restore 612, 618
         }

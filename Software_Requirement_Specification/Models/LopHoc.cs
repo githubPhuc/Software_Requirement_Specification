@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Software_Requirement_Specification.Models
 {
@@ -16,6 +13,7 @@ namespace Software_Requirement_Specification.Models
         public int Id { get; set; }
         public string TenLop { get; set; }
         public string NienKhoa { get; set; }
+        public int idtruong { get; set; }
         public TruongHoc TruongID { get; set; }
         public List<MonHoc> monHocs { get; set; }
     }

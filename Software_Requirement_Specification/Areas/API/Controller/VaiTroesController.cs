@@ -12,47 +12,47 @@ namespace Software_Requirement_Specification.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TaiLieuxController : ControllerBase
+    public class VaiTroesController : ControllerBase
     {
         private readonly Software_Requirement_SpecificationContext _context;
 
-        public TaiLieuxController(Software_Requirement_SpecificationContext context)
+        public VaiTroesController(Software_Requirement_SpecificationContext context)
         {
             _context = context;
         }
 
-        // GET: api/TaiLieux
+        // GET: api/VaiTroes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaiLieu>>> GetTaiLieu()
+        public async Task<ActionResult<IEnumerable<VaiTro>>> GetVaiTro()
         {
-            return await _context.TaiLieu.ToListAsync();
+            return await _context.VaiTro.ToListAsync();
         }
 
-        // GET: api/TaiLieux/5
+        // GET: api/VaiTroes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TaiLieu>> GetTaiLieu(int id)
+        public async Task<ActionResult<VaiTro>> GetVaiTro(int id)
         {
-            var taiLieu = await _context.TaiLieu.FindAsync(id);
+            var vaiTro = await _context.VaiTro.FindAsync(id);
 
-            if (taiLieu == null)
+            if (vaiTro == null)
             {
                 return NotFound();
             }
 
-            return taiLieu;
+            return vaiTro;
         }
 
-        // PUT: api/TaiLieux/5
+        // PUT: api/VaiTroes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTaiLieu(int id, TaiLieu taiLieu)
+        public async Task<IActionResult> PutVaiTro(int id, [FromBody] VaiTro vaiTro)
         {
-            if (id != taiLieu.Id)
+            if (id != vaiTro.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(taiLieu).State = EntityState.Modified;
+            _context.Entry(vaiTro).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace Software_Requirement_Specification.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TaiLieuExists(id))
+                if (!VaiTroExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace Software_Requirement_Specification.Controllers
             return NoContent();
         }
 
-        // POST: api/TaiLieux
+        // POST: api/VaiTroes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TaiLieu>> PostTaiLieu(TaiLieu taiLieu)
+        public async Task<ActionResult<VaiTro>> PostVaiTro([FromBody] VaiTro vaiTro)
         {
-            _context.TaiLieu.Add(taiLieu);
+            _context.VaiTro.Add(vaiTro);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTaiLieu", new { id = taiLieu.Id }, taiLieu);
+            return CreatedAtAction("GetVaiTro", new { id = vaiTro.Id }, vaiTro);
         }
 
-        // DELETE: api/TaiLieux/5
+        // DELETE: api/VaiTroes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTaiLieu(int id)
+        public async Task<IActionResult> DeleteVaiTro(int id)
         {
-            var taiLieu = await _context.TaiLieu.FindAsync(id);
-            if (taiLieu == null)
+            var vaiTro = await _context.VaiTro.FindAsync(id);
+            if (vaiTro == null)
             {
                 return NotFound();
             }
 
-            _context.TaiLieu.Remove(taiLieu);
+            _context.VaiTro.Remove(vaiTro);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TaiLieuExists(int id)
+        private bool VaiTroExists(int id)
         {
-            return _context.TaiLieu.Any(e => e.Id == id);
+            return _context.VaiTro.Any(e => e.Id == id);
         }
     }
 }
