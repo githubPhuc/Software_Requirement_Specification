@@ -28,7 +28,7 @@ namespace Software_Requirement_Specification.Controllers
             return await _context.TaiLieu.ToListAsync();
         }
 
-        // GET: api/TaiLieux/5
+        //GET: api/TaiLieux/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TaiLieu>> GetTaiLieu(int id)
         {
@@ -40,6 +40,19 @@ namespace Software_Requirement_Specification.Controllers
             }
 
             return taiLieu;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<TaiLieu>>> Timkiemtep(string ten)
+        {
+            var taiLieus = await _context.TaiLieu.Where(a => a.MonHocID.TenMonHoc.Contains(ten)).ToListAsync();
+
+            if (taiLieus == null)
+            {
+                return NotFound();
+            }
+
+            return taiLieus;
         }
 
         // PUT: api/TaiLieux/5

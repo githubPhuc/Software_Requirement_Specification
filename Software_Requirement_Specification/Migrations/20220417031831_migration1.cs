@@ -50,7 +50,7 @@ namespace Software_Requirement_Specification.Migrations
                     MatKhau = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SoDienThoai = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quyen = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    idQuyen = table.Column<int>(type: "int", nullable: false),
                     QuyenIDId = table.Column<int>(type: "int", nullable: true),
                     TrangThai = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -73,6 +73,7 @@ namespace Software_Requirement_Specification.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TenLop = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NienKhoa = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    idtruong = table.Column<int>(type: "int", nullable: false),
                     TruongIDId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -145,6 +146,7 @@ namespace Software_Requirement_Specification.Migrations
                     maNguoiDung = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TenMonHoc = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MoTa = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    idLopHoc = table.Column<int>(type: "int", nullable: false),
                     lopHocIdId = table.Column<int>(type: "int", nullable: true),
                     vaiTroId = table.Column<int>(type: "int", nullable: true),
                     TinhTrang = table.Column<bool>(type: "bit", nullable: false)

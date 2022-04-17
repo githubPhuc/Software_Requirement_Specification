@@ -20,27 +20,29 @@ namespace Software_Requirement_Specification.Controllers
         {
             _context = context;
         }
-        [HttpGet("{idtk}")]
-        public async Task<IActionResult> TimKiemMonHoc( int idtk)
+        //[Route("")]
+        [HttpGet]
+        public string TimKiemMonHoc(string ten)
         {
-            if (idtk == null)
-            {
-                return NotFound();
-            }
-            var monHoc = (from a in _context.VaiTro
-                          join b in _context.MonHoc on a.MaNguoiDung equals b.maNguoiDung
-                          where a.IdTaiKhoan == idtk
-                          join c in _context.LopHoc on b.idLopHoc equals c.Id
-                          select new
-                          {
-                              STT = b.Id,
-                              TenMonHoc = b.TenMonHoc,
-                              Lop = c.TenLop,
-                              vaitro = a.TenVaiTro,
+            //if (idtk == null)
+            //{
+            //    return NotFound();
+            //}
+            //var monHoc = (from a in _context.VaiTro
+            //              join b in _context.MonHoc on a.MaNguoiDung equals b.maNguoiDung
+            //              where a.IdTaiKhoan == idtk
+            //              join c in _context.LopHoc on b.idLopHoc equals c.Id
+            //              select new
+            //              {
+            //                  STT = b.Id,
+            //                  TenMonHoc = b.TenMonHoc,
+            //                  Lop = c.TenLop,
+            //                  vaitro = a.TenVaiTro,
 
-                          });
+            //              }).ToList();
 
-            return (IActionResult)monHoc;
+            //return (IActionResult)monHoc;
+            return "tìm kiếm môn học"+ten;
 
         }
 

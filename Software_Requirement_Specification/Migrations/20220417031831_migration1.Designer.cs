@@ -10,8 +10,8 @@ using Software_Requirement_Specification.Data;
 namespace Software_Requirement_Specification.Migrations
 {
     [DbContext(typeof(Software_Requirement_SpecificationContext))]
-    [Migration("20220415115827_migration3")]
-    partial class migration3
+    [Migration("20220417031831_migration1")]
+    partial class migration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -86,6 +86,9 @@ namespace Software_Requirement_Specification.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("TruongIDId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idtruong")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

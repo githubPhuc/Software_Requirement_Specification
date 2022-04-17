@@ -28,6 +28,7 @@ namespace Software_Requirement_Specification.Controllers
             return await _context.Tep.ToListAsync();
         }
 
+
         // GET: api/Teps/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Tep>> GetTep(int id)
@@ -41,6 +42,18 @@ namespace Software_Requirement_Specification.Controllers
 
             return tep;
         }
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<TaiLieu>>> Timkiemtep(string ten )
+        //{
+        //    var tep = await _context.TaiLieu.Where(a => a.MonHocID.TenMonHoc.Contains(ten)).ToListAsync();
+
+        //    if (tep == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return tep;
+        //}
 
         // PUT: api/Teps/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
