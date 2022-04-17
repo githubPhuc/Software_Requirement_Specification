@@ -15,11 +15,9 @@ namespace Software_Requirement_Specification.Models
         [Key]
         public int Id { get; set; }
         [Display(Name = "Môn học")]
-        public MonHoc monHocId { get; set; }
-        
+        public int idMonHoc { get; set; }
         [Display(Name = "Hình thức thi")]
         public string HinhThuc { get; set; }
-
         public Tep tepId { get; set; }
         [Display(Name = "Thời Lượng thi")]
         public int ThoiLuong { get; set; }
@@ -33,6 +31,7 @@ namespace Software_Requirement_Specification.Models
         public bool PheDuyet { get; set; }
         [Display(Name = "Ghi chú")]
         public string GhiChu { get; set; }
+        public MonHoc monHocId { get; set; }
         public List<Tep> teps { get; set; }
     }
 }

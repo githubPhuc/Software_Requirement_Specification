@@ -12,47 +12,47 @@ namespace Software_Requirement_Specification.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TruongHocsController : ControllerBase
+    public class TepsController : ControllerBase
     {
         private readonly Software_Requirement_SpecificationContext _context;
 
-        public TruongHocsController(Software_Requirement_SpecificationContext context)
+        public TepsController(Software_Requirement_SpecificationContext context)
         {
             _context = context;
         }
 
-        // GET: api/TruongHocs
+        // GET: api/Teps
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TruongHoc>>> GetTruongHoc()
+        public async Task<ActionResult<IEnumerable<Tep>>> GetTep()
         {
-            return await _context.TruongHoc.ToListAsync();
+            return await _context.Tep.ToListAsync();
         }
 
-        // GET: api/TruongHocs/5
+        // GET: api/Teps/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TruongHoc>> GetTruongHoc(int id)
+        public async Task<ActionResult<Tep>> GetTep(int id)
         {
-            var truongHoc = await _context.TruongHoc.FindAsync(id);
+            var tep = await _context.Tep.FindAsync(id);
 
-            if (truongHoc == null)
+            if (tep == null)
             {
                 return NotFound();
             }
 
-            return truongHoc;
+            return tep;
         }
 
-        // PUT: api/TruongHocs/5
+        // PUT: api/Teps/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTruongHoc(int id, TruongHoc truongHoc)
+        public async Task<IActionResult> PutTep(int id, [FromBody] Tep tep)
         {
-            if (id != truongHoc.Id)
+            if (id != tep.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(truongHoc).State = EntityState.Modified;
+            _context.Entry(tep).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace Software_Requirement_Specification.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TruongHocExists(id))
+                if (!TepExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace Software_Requirement_Specification.Controllers
             return NoContent();
         }
 
-        // POST: api/TruongHocs
+        // POST: api/Teps
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TruongHoc>> PostTruongHoc(TruongHoc truongHoc)
+        public async Task<ActionResult<Tep>> PostTep([FromBody] Tep tep)
         {
-            _context.TruongHoc.Add(truongHoc);
+            _context.Tep.Add(tep);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTruongHoc", new { id = truongHoc.Id }, truongHoc);
+            return CreatedAtAction("GetTep", new { id = tep.Id }, tep);
         }
 
-        // DELETE: api/TruongHocs/5
+        // DELETE: api/Teps/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTruongHoc(int id)
+        public async Task<IActionResult> DeleteTep(int id)
         {
-            var truongHoc = await _context.TruongHoc.FindAsync(id);
-            if (truongHoc == null)
+            var tep = await _context.Tep.FindAsync(id);
+            if (tep == null)
             {
                 return NotFound();
             }
 
-            _context.TruongHoc.Remove(truongHoc);
+            _context.Tep.Remove(tep);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TruongHocExists(int id)
+        private bool TepExists(int id)
         {
-            return _context.TruongHoc.Any(e => e.Id == id);
+            return _context.Tep.Any(e => e.Id == id);
         }
     }
 }

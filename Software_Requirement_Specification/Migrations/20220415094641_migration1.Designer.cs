@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Software_Requirement_Specification.Data;
 
 namespace Software_Requirement_Specification.Migrations
 {
     [DbContext(typeof(Software_Requirement_SpecificationContext))]
-    partial class Software_Requirement_SpecificationContextModelSnapshot : ModelSnapshot
+    [Migration("20220415094641_migration1")]
+    partial class migration1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,9 +88,6 @@ namespace Software_Requirement_Specification.Migrations
                     b.Property<int?>("TruongIDId")
                         .HasColumnType("int");
 
-                    b.Property<int>("idtruong")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("TruongIDId");
@@ -111,9 +110,6 @@ namespace Software_Requirement_Specification.Migrations
 
                     b.Property<bool>("TinhTrang")
                         .HasColumnType("bit");
-
-                    b.Property<int>("idLopHoc")
-                        .HasColumnType("int");
 
                     b.Property<int?>("lopHocIdId")
                         .HasColumnType("int");
@@ -164,6 +160,9 @@ namespace Software_Requirement_Specification.Migrations
                     b.Property<string>("MatKhau")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Quyen")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("QuyenIDId")
                         .HasColumnType("int");
 
@@ -175,9 +174,6 @@ namespace Software_Requirement_Specification.Migrations
 
                     b.Property<bool>("TrangThai")
                         .HasColumnType("bit");
-
-                    b.Property<int>("idQuyen")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

@@ -56,8 +56,8 @@ namespace Software_Requirement_Specification
             {
                 endpoints.MapControllerRoute(
                     name: "Api",
-                    pattern: "api/[controller]/ID/{id}",
-                    defaults: new { controller = "MonHocs", action = "MonHoc" });
+                    pattern: "api/[controller]/Action/ID/{id}",
+                    defaults: new { controller = "MonHocs",Action= "GetMonHoc" });
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

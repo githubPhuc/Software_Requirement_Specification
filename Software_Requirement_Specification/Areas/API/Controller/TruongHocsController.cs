@@ -12,48 +12,47 @@ namespace Software_Requirement_Specification.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MonHocsController : ControllerBase
+    public class TruongHocsController : ControllerBase
     {
         private readonly Software_Requirement_SpecificationContext _context;
 
-        public MonHocsController(Software_Requirement_SpecificationContext context)
+        public TruongHocsController(Software_Requirement_SpecificationContext context)
         {
             _context = context;
         }
 
-        // GET: api/MonHocs
+        // GET: api/TruongHocs
         [HttpGet]
-
-        public async Task<ActionResult<IEnumerable<MonHoc>>> GetMonHoc()
+        public async Task<ActionResult<IEnumerable<TruongHoc>>> GetTruongHoc()
         {
-            return await _context.MonHoc.ToListAsync();
+            return await _context.TruongHoc.ToListAsync();
         }
 
-        // GET: api/MonHocs/5
+        // GET: api/TruongHocs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<MonHoc>> GetMonHoc(int id)
+        public async Task<ActionResult<TruongHoc>> GetTruongHoc(int id)
         {
-            var monHoc = await _context.MonHoc.FindAsync(id);
+            var truongHoc = await _context.TruongHoc.FindAsync(id);
 
-            if (monHoc == null)
+            if (truongHoc == null)
             {
                 return NotFound();
             }
 
-            return monHoc;
+            return truongHoc;
         }
 
-        // PUT: api/MonHocs/5
+        // PUT: api/TruongHocs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMonHoc(int id, MonHoc monHoc)
+        public async Task<IActionResult> PutTruongHoc(int id, [FromBody] TruongHoc truongHoc)
         {
-            if (id != monHoc.Id)
+            if (id != truongHoc.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(monHoc).State = EntityState.Modified;
+            _context.Entry(truongHoc).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +60,7 @@ namespace Software_Requirement_Specification.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MonHocExists(id))
+                if (!TruongHocExists(id))
                 {
                     return NotFound();
                 }
@@ -74,37 +73,36 @@ namespace Software_Requirement_Specification.Controllers
             return NoContent();
         }
 
-        // POST: api/MonHocs
+        // POST: api/TruongHocs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [Route("Api/MonHocs")]
-        public async Task<ActionResult<MonHoc>> PostMonHoc(MonHoc monHoc)
+        public async Task<ActionResult<TruongHoc>> PostTruongHoc([FromBody]  TruongHoc truongHoc)
         {
-            _context.MonHoc.Add(monHoc);
+            _context.TruongHoc.Add(truongHoc);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMonHoc", new { id = monHoc.Id }, monHoc);
+            return CreatedAtAction("GetTruongHoc", new { id = truongHoc.Id }, truongHoc);
         }
 
-        // DELETE: api/MonHocs/5
+        // DELETE: api/TruongHocs/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMonHoc(int id)
+        public async Task<IActionResult> DeleteTruongHoc(int id)
         {
-            var monHoc = await _context.MonHoc.FindAsync(id);
-            if (monHoc == null)
+            var truongHoc = await _context.TruongHoc.FindAsync(id);
+            if (truongHoc == null)
             {
                 return NotFound();
             }
 
-            _context.MonHoc.Remove(monHoc);
+            _context.TruongHoc.Remove(truongHoc);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool MonHocExists(int id)
+        private bool TruongHocExists(int id)
         {
-            return _context.MonHoc.Any(e => e.Id == id);
+            return _context.TruongHoc.Any(e => e.Id == id);
         }
     }
 }

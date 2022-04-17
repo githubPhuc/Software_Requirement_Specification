@@ -12,47 +12,47 @@ namespace Software_Requirement_Specification.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PhanQuyensController : ControllerBase
+    public class TaiLieuxController : ControllerBase
     {
         private readonly Software_Requirement_SpecificationContext _context;
 
-        public PhanQuyensController(Software_Requirement_SpecificationContext context)
+        public TaiLieuxController(Software_Requirement_SpecificationContext context)
         {
             _context = context;
         }
 
-        // GET: api/PhanQuyens
+        // GET: api/TaiLieux
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PhanQuyen>>> GetPhanQuyen()
+        public async Task<ActionResult<IEnumerable<TaiLieu>>> GetTaiLieu()
         {
-            return await _context.PhanQuyen.ToListAsync();
+            return await _context.TaiLieu.ToListAsync();
         }
 
-        // GET: api/PhanQuyens/5
+        // GET: api/TaiLieux/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PhanQuyen>> GetPhanQuyen(int id)
+        public async Task<ActionResult<TaiLieu>> GetTaiLieu(int id)
         {
-            var phanQuyen = await _context.PhanQuyen.FindAsync(id);
+            var taiLieu = await _context.TaiLieu.FindAsync(id);
 
-            if (phanQuyen == null)
+            if (taiLieu == null)
             {
                 return NotFound();
             }
 
-            return phanQuyen;
+            return taiLieu;
         }
 
-        // PUT: api/PhanQuyens/5
+        // PUT: api/TaiLieux/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPhanQuyen(int id, PhanQuyen phanQuyen)
+        public async Task<IActionResult> PutTaiLieu(int id, [FromBody] TaiLieu taiLieu)
         {
-            if (id != phanQuyen.Id)
+            if (id != taiLieu.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(phanQuyen).State = EntityState.Modified;
+            _context.Entry(taiLieu).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace Software_Requirement_Specification.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PhanQuyenExists(id))
+                if (!TaiLieuExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace Software_Requirement_Specification.Controllers
             return NoContent();
         }
 
-        // POST: api/PhanQuyens
+        // POST: api/TaiLieux
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PhanQuyen>> PostPhanQuyen(PhanQuyen phanQuyen)
+        public async Task<ActionResult<TaiLieu>> PostTaiLieu([FromBody]  TaiLieu taiLieu)
         {
-            _context.PhanQuyen.Add(phanQuyen);
+            _context.TaiLieu.Add(taiLieu);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPhanQuyen", new { id = phanQuyen.Id }, phanQuyen);
+            return CreatedAtAction("GetTaiLieu", new { id = taiLieu.Id }, taiLieu);
         }
 
-        // DELETE: api/PhanQuyens/5
+        // DELETE: api/TaiLieux/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePhanQuyen(int id)
+        public async Task<IActionResult> DeleteTaiLieu(int id)
         {
-            var phanQuyen = await _context.PhanQuyen.FindAsync(id);
-            if (phanQuyen == null)
+            var taiLieu = await _context.TaiLieu.FindAsync(id);
+            if (taiLieu == null)
             {
                 return NotFound();
             }
 
-            _context.PhanQuyen.Remove(phanQuyen);
+            _context.TaiLieu.Remove(taiLieu);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool PhanQuyenExists(int id)
+        private bool TaiLieuExists(int id)
         {
-            return _context.PhanQuyen.Any(e => e.Id == id);
+            return _context.TaiLieu.Any(e => e.Id == id);
         }
     }
 }
