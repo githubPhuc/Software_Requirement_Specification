@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Software_Requirement_Specification.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace Software_Requirement_Specification
 {
@@ -54,13 +55,29 @@ namespace Software_Requirement_Specification
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "Api",
-                    pattern: "api/[controller]/Action/ID/{id}",
-                    defaults: new { controller = "MonHocs",Action= "GetMonHoc" });
+                
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapGet("/testMailUtils", async (context) =>
+                 {
+                     var mesage = await MailUtils.MailUtils.SendMail("0306191061@caothang.edu.vn",
+                                                                     "ptranninh@gmail.com",
+                                                                     "text",
+                                                                     "Xin chào tôi là ai và ai là tôi");
+                     await context.Response.WriteAsync(mesage);
+                 });
+                endpoints.MapGet("/testGmailUtils", async (context) =>
+                {
+                    var mesage = await MailUtils.MailUtils.SendGmail("ptranninh@gmail.com",
+                                                                    "ptranninh@gmail.com",
+                                                                    "text",
+                                                                    "Xin chào tôi là ai và ai là tôi",
+                                                                    "ptranninh@gmail.com",
+                                                                    "tranninhphuc@1061");
+                    await context.Response.WriteAsync(mesage);
+                });
             });
         }
     }
