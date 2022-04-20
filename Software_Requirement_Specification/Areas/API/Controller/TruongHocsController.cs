@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Software_Requirement_Specification.Data;
 using Software_Requirement_Specification.Models;
 
-namespace Software_Requirement_Specification.Controllers
+namespace Software_Requirement_Specification.Areas.API.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -45,7 +45,7 @@ namespace Software_Requirement_Specification.Controllers
         // PUT: api/TruongHocs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTruongHoc(int id, [FromBody] TruongHoc truongHoc)
+        public async Task<IActionResult> PutTruongHoc(int id, TruongHoc truongHoc)
         {
             if (id != truongHoc.Id)
             {
@@ -76,7 +76,7 @@ namespace Software_Requirement_Specification.Controllers
         // POST: api/TruongHocs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TruongHoc>> PostTruongHoc([FromBody]  TruongHoc truongHoc)
+        public async Task<ActionResult<TruongHoc>> PostTruongHoc(TruongHoc truongHoc)
         {
             _context.TruongHoc.Add(truongHoc);
             await _context.SaveChangesAsync();

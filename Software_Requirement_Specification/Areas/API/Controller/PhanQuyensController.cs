@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Software_Requirement_Specification.Data;
 using Software_Requirement_Specification.Models;
 
-namespace Software_Requirement_Specification.Controllers
+namespace Software_Requirement_Specification.Areas.API.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -45,7 +45,7 @@ namespace Software_Requirement_Specification.Controllers
         // PUT: api/PhanQuyens/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPhanQuyen(int id, [FromBody] PhanQuyen phanQuyen)
+        public async Task<IActionResult> PutPhanQuyen(int id, PhanQuyen phanQuyen)
         {
             if (id != phanQuyen.Id)
             {
@@ -76,7 +76,7 @@ namespace Software_Requirement_Specification.Controllers
         // POST: api/PhanQuyens
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PhanQuyen>> PostPhanQuyen([FromBody] PhanQuyen phanQuyen)
+        public async Task<ActionResult<PhanQuyen>> PostPhanQuyen(PhanQuyen phanQuyen)
         {
             _context.PhanQuyen.Add(phanQuyen);
             await _context.SaveChangesAsync();

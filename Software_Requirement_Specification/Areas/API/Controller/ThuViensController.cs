@@ -12,47 +12,47 @@ namespace Software_Requirement_Specification.Areas.API.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TaiKhoansController : ControllerBase
+    public class ThuViensController : ControllerBase
     {
         private readonly Software_Requirement_SpecificationContext _context;
 
-        public TaiKhoansController(Software_Requirement_SpecificationContext context)
+        public ThuViensController(Software_Requirement_SpecificationContext context)
         {
             _context = context;
         }
 
-        // GET: api/TaiKhoans
+        // GET: api/ThuViens
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaiKhoan>>> GetTaiKhoan()
+        public async Task<ActionResult<IEnumerable<ThuVien>>> GetThuVien()
         {
-            return await _context.TaiKhoan.ToListAsync();
+            return await _context.ThuVien.ToListAsync();
         }
 
-        // GET: api/TaiKhoans/5
+        // GET: api/ThuViens/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TaiKhoan>> GetTaiKhoan(int id)
+        public async Task<ActionResult<ThuVien>> GetThuVien(int id)
         {
-            var taiKhoan = await _context.TaiKhoan.FindAsync(id);
+            var thuVien = await _context.ThuVien.FindAsync(id);
 
-            if (taiKhoan == null)
+            if (thuVien == null)
             {
                 return NotFound();
             }
 
-            return taiKhoan;
+            return thuVien;
         }
 
-        // PUT: api/TaiKhoans/5
+        // PUT: api/ThuViens/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTaiKhoan(int id, TaiKhoan taiKhoan)
+        public async Task<IActionResult> PutThuVien(int id, ThuVien thuVien)
         {
-            if (id != taiKhoan.Id)
+            if (id != thuVien.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(taiKhoan).State = EntityState.Modified;
+            _context.Entry(thuVien).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TaiKhoanExists(id))
+                if (!ThuVienExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             return NoContent();
         }
 
-        // POST: api/TaiKhoans
+        // POST: api/ThuViens
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TaiKhoan>> PostTaiKhoan(TaiKhoan taiKhoan)
+        public async Task<ActionResult<ThuVien>> PostThuVien(ThuVien thuVien)
         {
-            _context.TaiKhoan.Add(taiKhoan);
+            _context.ThuVien.Add(thuVien);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTaiKhoan", new { id = taiKhoan.Id }, taiKhoan);
+            return CreatedAtAction("GetThuVien", new { id = thuVien.Id }, thuVien);
         }
 
-        // DELETE: api/TaiKhoans/5
+        // DELETE: api/ThuViens/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTaiKhoan(int id)
+        public async Task<IActionResult> DeleteThuVien(int id)
         {
-            var taiKhoan = await _context.TaiKhoan.FindAsync(id);
-            if (taiKhoan == null)
+            var thuVien = await _context.ThuVien.FindAsync(id);
+            if (thuVien == null)
             {
                 return NotFound();
             }
 
-            _context.TaiKhoan.Remove(taiKhoan);
+            _context.ThuVien.Remove(thuVien);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TaiKhoanExists(int id)
+        private bool ThuVienExists(int id)
         {
-            return _context.TaiKhoan.Any(e => e.Id == id);
+            return _context.ThuVien.Any(e => e.Id == id);
         }
     }
 }

@@ -18,5 +18,6 @@ namespace Software_Requirement_Specification.Models
         public int SoTaiLieuChoDuyet { get; set; }
         public DateTime NgayGuiPheDuyet { get; set; }
         public bool TinhTrang { get; set; }
+        public List<Tep> tep { get; set; }
     }
 }

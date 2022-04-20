@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Software_Requirement_Specification.Data;
 using Software_Requirement_Specification.Models;
 
-namespace Software_Requirement_Specification.Controllers
+namespace Software_Requirement_Specification.Areas.API.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -45,7 +45,7 @@ namespace Software_Requirement_Specification.Controllers
         // PUT: api/Teps/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTep(int id, [FromBody] Tep tep)
+        public async Task<IActionResult> PutTep(int id, Tep tep)
         {
             if (id != tep.Id)
             {
@@ -76,7 +76,7 @@ namespace Software_Requirement_Specification.Controllers
         // POST: api/Teps
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Tep>> PostTep([FromBody] Tep tep)
+        public async Task<ActionResult<Tep>> PostTep(Tep tep)
         {
             _context.Tep.Add(tep);
             await _context.SaveChangesAsync();

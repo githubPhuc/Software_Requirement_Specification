@@ -18,12 +18,10 @@ namespace Software_Requirement_Specification.Models
         public string TenVaiTro { get; set; }
         [Display(Name = "Mô tả")]
         public string MoTa { get; set; }
-        public int IdTaiKhoan { get; set; }
+        public int idQuyen { get; set; }
         public string ThongBao { get; set; }
-        public TaiKhoan taikhoan { get; set; }
-        public Tep TepRiengTu { get; set; }
-        public List<MonHoc> monHocs { get; set; }
-        public List<DeThi> De { get; set; }
+        public PhanQuyen phanQuyen { get; set; }
+        public List<Tep> tep { get; set; }
 
     }
 }

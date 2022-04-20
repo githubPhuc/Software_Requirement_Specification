@@ -12,7 +12,8 @@ namespace Software_Requirement_Specification.Models
         public int Id { get; set; }
 
         public string TenTruong { get; set; }
-        public string TenThuVien { get; set; }
+        public int idThuVien { get; set; }
+        public ThuVien thuVien { get; set; }
         public string HieuTruong { get; set; }
         public string WebSite { get; set; }
         public string SoDienThoai { get; set; }

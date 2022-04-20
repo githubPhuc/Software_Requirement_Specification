@@ -12,10 +12,13 @@ namespace Software_Requirement_Specification.Models
         //Khởi tạo 2:00 13/4/2022
         [Key]
         public int Id { get; set; }
-        public string LoaiFile { get; set; }
-        public string TenTep { get; set; }
-        public string NguoiChinhSua { get; set; }
-        public DateTime NgaySuaLanCuoi { get; set; }
+        public string TenFile { get; set; }
+        public string Loai { get; set; }
         public int KichThuoc { get; set; }
+
+        public TaiLieu TaiLieu { get; set; }
+        public BaiGiang BaiGiang { get; set; }
+        public DeThi DeThi { get; set; }
+        public VaiTro VaiTro { get; set; }
     }
 }
