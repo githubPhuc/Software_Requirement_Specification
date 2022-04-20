@@ -45,7 +45,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // PUT: api/TaiLieux/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTaiLieu(int id, TaiLieu taiLieu)
+        public async Task<IActionResult> PutTaiLieu(int id, [FromBody] TaiLieu taiLieu)
         {
             if (id != taiLieu.Id)
             {
@@ -76,7 +76,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // POST: api/TaiLieux
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TaiLieu>> PostTaiLieu(TaiLieu taiLieu)
+        public async Task<ActionResult<TaiLieu>> PostTaiLieu([FromBody] TaiLieu taiLieu)
         {
             _context.TaiLieu.Add(taiLieu);
             await _context.SaveChangesAsync();

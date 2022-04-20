@@ -27,6 +27,24 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         {
             return await _context.MonHoc.ToListAsync();
         }
+        [HttpGet]
+        public ActionResult xemTaiLieumonHoc(int id)
+        {
+            var data = (from a in _context.NguoiDung
+                        join b in _context.MonHoc on a.Id equals b.nguoiDungId
+                        join c in _context.TaiLieu on b.Id equals c.monhocId
+                        where b.Id == id && a.VaiTro.TenVaiTro=="Giáo Viên"
+                        select new
+                        {
+                            b.Id,
+                            b.TenMonHoc,
+                            a.Ten,
+                            c.SoTaiLieuChoDuyet,
+                            c.TinhTrang,
+                            c.NgayGuiPheDuyet
+                        });
+            return Ok(data);
+        }
 
         // GET: api/MonHocs/5
         [HttpGet("{id}")]
@@ -45,7 +63,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // PUT: api/MonHocs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMonHoc(int id, MonHoc monHoc)
+        public async Task<IActionResult> PutMonHoc(int id, [FromBody] MonHoc monHoc)
         {
             if (id != monHoc.Id)
             {
@@ -76,7 +94,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // POST: api/MonHocs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<MonHoc>> PostMonHoc(MonHoc monHoc)
+        public async Task<ActionResult<MonHoc>> PostMonHoc([FromBody] MonHoc monHoc)
         {
             _context.MonHoc.Add(monHoc);
             await _context.SaveChangesAsync();

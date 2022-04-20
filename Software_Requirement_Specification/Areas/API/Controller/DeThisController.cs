@@ -45,7 +45,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // PUT: api/DeThis/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDeThi(int id, DeThi deThi)
+        public async Task<IActionResult> PutDeThi(int id, [FromBody] DeThi deThi)
         {
             if (id != deThi.Id)
             {
@@ -76,7 +76,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // POST: api/DeThis
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<DeThi>> PostDeThi(DeThi deThi)
+        public async Task<ActionResult<DeThi>> PostDeThi([FromBody] DeThi deThi)
         {
             _context.DeThi.Add(deThi);
             await _context.SaveChangesAsync();

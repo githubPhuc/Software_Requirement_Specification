@@ -45,7 +45,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // PUT: api/TruongHocs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTruongHoc(int id, TruongHoc truongHoc)
+        public async Task<IActionResult> PutTruongHoc(int id, [FromBody] TruongHoc truongHoc)
         {
             if (id != truongHoc.Id)
             {
@@ -76,7 +76,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // POST: api/TruongHocs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TruongHoc>> PostTruongHoc(TruongHoc truongHoc)
+        public async Task<ActionResult<TruongHoc>> PostTruongHoc([FromBody] TruongHoc truongHoc)
         {
             _context.TruongHoc.Add(truongHoc);
             await _context.SaveChangesAsync();

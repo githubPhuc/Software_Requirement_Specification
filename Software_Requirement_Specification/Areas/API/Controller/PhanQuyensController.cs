@@ -45,7 +45,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // PUT: api/PhanQuyens/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPhanQuyen(int id, PhanQuyen phanQuyen)
+        public async Task<IActionResult> PutPhanQuyen(int id, [FromBody] PhanQuyen phanQuyen)
         {
             if (id != phanQuyen.Id)
             {
@@ -76,7 +76,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // POST: api/PhanQuyens
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PhanQuyen>> PostPhanQuyen(PhanQuyen phanQuyen)
+        public async Task<ActionResult<PhanQuyen>> PostPhanQuyen([FromBody] PhanQuyen phanQuyen)
         {
             _context.PhanQuyen.Add(phanQuyen);
             await _context.SaveChangesAsync();

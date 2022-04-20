@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Software_Requirement_Specification.Data;
 
 namespace Software_Requirement_Specification.Migrations
 {
     [DbContext(typeof(Software_Requirement_SpecificationContext))]
-    partial class Software_Requirement_SpecificationContextModelSnapshot : ModelSnapshot
+    [Migration("20220420093310_migration2")]
+    partial class migration2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,8 +155,8 @@ namespace Software_Requirement_Specification.Migrations
                     b.Property<int?>("lopHocIdId")
                         .HasColumnType("int");
 
-                    b.Property<int>("nguoiDungId")
-                        .HasColumnType("int");
+                    b.Property<string>("maNguoiDung")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("vaiTroId")
                         .HasColumnType("int");
@@ -162,8 +164,6 @@ namespace Software_Requirement_Specification.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("lopHocIdId");
-
-                    b.HasIndex("nguoiDungId");
 
                     b.HasIndex("vaiTroId");
 
@@ -483,19 +483,11 @@ namespace Software_Requirement_Specification.Migrations
                         .WithMany("monHocs")
                         .HasForeignKey("lopHocIdId");
 
-                    b.HasOne("Software_Requirement_Specification.Models.NguoiDung", "nguoiDung")
-                        .WithMany()
-                        .HasForeignKey("nguoiDungId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Software_Requirement_Specification.Models.VaiTro", "vaiTro")
                         .WithMany()
                         .HasForeignKey("vaiTroId");
 
                     b.Navigation("lopHocId");
-
-                    b.Navigation("nguoiDung");
 
                     b.Navigation("vaiTro");
                 });

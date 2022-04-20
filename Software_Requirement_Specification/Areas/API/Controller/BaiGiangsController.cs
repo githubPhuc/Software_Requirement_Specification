@@ -45,7 +45,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // PUT: api/BaiGiangs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBaiGiang(int id, BaiGiang baiGiang)
+        public async Task<IActionResult> PutBaiGiang(int id, [FromBody] BaiGiang baiGiang)
         {
             if (id != baiGiang.Id)
             {
@@ -76,7 +76,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // POST: api/BaiGiangs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<BaiGiang>> PostBaiGiang(BaiGiang baiGiang)
+        public async Task<ActionResult<BaiGiang>> PostBaiGiang([FromBody] BaiGiang baiGiang)
         {
             _context.BaiGiang.Add(baiGiang);
             await _context.SaveChangesAsync();
