@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Software_Requirement_Specification.Data;
 using Software_Requirement_Specification.Models;
 
-namespace Software_Requirement_Specification.Controllers
+namespace Software_Requirement_Specification.Areas.API.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -28,7 +28,7 @@ namespace Software_Requirement_Specification.Controllers
             return await _context.TaiLieu.ToListAsync();
         }
 
-        //GET: api/TaiLieux/5
+        // GET: api/TaiLieux/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TaiLieu>> GetTaiLieu(int id)
         {
@@ -42,23 +42,10 @@ namespace Software_Requirement_Specification.Controllers
             return taiLieu;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaiLieu>>> Timkiemtep(string ten)
-        {
-            var taiLieus = await _context.TaiLieu.Where(a => a.MonHocID.TenMonHoc.Contains(ten)).ToListAsync();
-
-            if (taiLieus == null)
-            {
-                return NotFound();
-            }
-
-            return taiLieus;
-        }
-
         // PUT: api/TaiLieux/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTaiLieu(int id, [FromBody] TaiLieu taiLieu)
+        public async Task<IActionResult> PutTaiLieu(int id, TaiLieu taiLieu)
         {
             if (id != taiLieu.Id)
             {
@@ -89,7 +76,7 @@ namespace Software_Requirement_Specification.Controllers
         // POST: api/TaiLieux
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TaiLieu>> PostTaiLieu([FromBody]  TaiLieu taiLieu)
+        public async Task<ActionResult<TaiLieu>> PostTaiLieu(TaiLieu taiLieu)
         {
             _context.TaiLieu.Add(taiLieu);
             await _context.SaveChangesAsync();

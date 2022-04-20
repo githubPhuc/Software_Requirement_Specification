@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Software_Requirement_Specification.Data;
 using Software_Requirement_Specification.Models;
 
-namespace Software_Requirement_Specification.Controllers
+namespace Software_Requirement_Specification.Areas.API.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -28,7 +28,6 @@ namespace Software_Requirement_Specification.Controllers
             return await _context.Tep.ToListAsync();
         }
 
-
         // GET: api/Teps/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Tep>> GetTep(int id)
@@ -42,23 +41,11 @@ namespace Software_Requirement_Specification.Controllers
 
             return tep;
         }
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<TaiLieu>>> Timkiemtep(string ten )
-        //{
-        //    var tep = await _context.TaiLieu.Where(a => a.MonHocID.TenMonHoc.Contains(ten)).ToListAsync();
-
-        //    if (tep == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return tep;
-        //}
 
         // PUT: api/Teps/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTep(int id, [FromBody] Tep tep)
+        public async Task<IActionResult> PutTep(int id, Tep tep)
         {
             if (id != tep.Id)
             {
@@ -89,7 +76,7 @@ namespace Software_Requirement_Specification.Controllers
         // POST: api/Teps
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Tep>> PostTep([FromBody] Tep tep)
+        public async Task<ActionResult<Tep>> PostTep(Tep tep)
         {
             _context.Tep.Add(tep);
             await _context.SaveChangesAsync();

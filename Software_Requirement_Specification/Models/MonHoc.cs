@@ -22,5 +22,6 @@ namespace Software_Requirement_Specification.Models
         public bool TinhTrang { get; set; }
         public List<TaiLieu> taiLieus { get; set; }
         public List<DeThi> deThis { get; set; }
+
     }
 }

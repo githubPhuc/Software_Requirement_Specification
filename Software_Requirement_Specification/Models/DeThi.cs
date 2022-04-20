@@ -18,7 +18,8 @@ namespace Software_Requirement_Specification.Models
         public int idMonHoc { get; set; }
         [Display(Name = "Hình thức thi")]
         public string HinhThuc { get; set; }
-        public Tep tepId { get; set; }
+        public int NguoiDungId { get; set; }
+        public NguoiDung NguoiDung { get; set; }
         [Display(Name = "Thời Lượng thi")]
         public int ThoiLuong { get; set; }
         [Display(Name = "Ngày Tạo")]

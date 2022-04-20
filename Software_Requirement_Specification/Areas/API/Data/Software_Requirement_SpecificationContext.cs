@@ -36,5 +36,14 @@ namespace Software_Requirement_Specification.Data
 
        
         public DbSet<Software_Requirement_Specification.Models.VaiTro> VaiTro { get; set; }
+
+       
+        public DbSet<Software_Requirement_Specification.Models.NguoiDung> NguoiDung { get; set; }
+
+       
+        public DbSet<Software_Requirement_Specification.Models.ThuVien> ThuVien { get; set; }
+
+       
+        public DbSet<Software_Requirement_Specification.Models.BaiGiang> BaiGiang { get; set; }
     }
 }

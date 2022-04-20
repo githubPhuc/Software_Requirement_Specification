@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Software_Requirement_Specification.Data;
 using Software_Requirement_Specification.Models;
 
-namespace Software_Requirement_Specification.Controllers
+namespace Software_Requirement_Specification.Areas.API.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -20,35 +20,9 @@ namespace Software_Requirement_Specification.Controllers
         {
             _context = context;
         }
-        //[Route("")]
-        //[HttpGet]
-        //public string TimKiemMonHoc(string ten)
-        //{
-        //    //if (idtk == null)
-        //    //{
-        //    //    return NotFound();
-        //    //}
-        //    //var monHoc = (from a in _context.VaiTro
-        //    //              join b in _context.MonHoc on a.MaNguoiDung equals b.maNguoiDung
-        //    //              where a.IdTaiKhoan == idtk
-        //    //              join c in _context.LopHoc on b.idLopHoc equals c.Id
-        //    //              select new
-        //    //              {
-        //    //                  STT = b.Id,
-        //    //                  TenMonHoc = b.TenMonHoc,
-        //    //                  Lop = c.TenLop,
-        //    //                  vaitro = a.TenVaiTro,
-
-        //    //              }).ToList();
-
-        //    //return (IActionResult)monHoc;
-        //    return "tìm kiếm môn học"+ten;
-
-        //}
 
         // GET: api/MonHocs
         [HttpGet]
-
         public async Task<ActionResult<IEnumerable<MonHoc>>> GetMonHoc()
         {
             return await _context.MonHoc.ToListAsync();
@@ -71,7 +45,7 @@ namespace Software_Requirement_Specification.Controllers
         // PUT: api/MonHocs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMonHoc( int id, [FromBody] MonHoc monHoc)
+        public async Task<IActionResult> PutMonHoc(int id, MonHoc monHoc)
         {
             if (id != monHoc.Id)
             {
@@ -102,8 +76,7 @@ namespace Software_Requirement_Specification.Controllers
         // POST: api/MonHocs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [Route("Api/MonHocs")]
-        public async Task<ActionResult<MonHoc>> PostMonHoc([FromBody] MonHoc monHoc)
+        public async Task<ActionResult<MonHoc>> PostMonHoc(MonHoc monHoc)
         {
             _context.MonHoc.Add(monHoc);
             await _context.SaveChangesAsync();

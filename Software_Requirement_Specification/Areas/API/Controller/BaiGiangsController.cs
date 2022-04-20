@@ -12,47 +12,47 @@ namespace Software_Requirement_Specification.Areas.API.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TaiKhoansController : ControllerBase
+    public class BaiGiangsController : ControllerBase
     {
         private readonly Software_Requirement_SpecificationContext _context;
 
-        public TaiKhoansController(Software_Requirement_SpecificationContext context)
+        public BaiGiangsController(Software_Requirement_SpecificationContext context)
         {
             _context = context;
         }
 
-        // GET: api/TaiKhoans
+        // GET: api/BaiGiangs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaiKhoan>>> GetTaiKhoan()
+        public async Task<ActionResult<IEnumerable<BaiGiang>>> GetBaiGiang()
         {
-            return await _context.TaiKhoan.ToListAsync();
+            return await _context.BaiGiang.ToListAsync();
         }
 
-        // GET: api/TaiKhoans/5
+        // GET: api/BaiGiangs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TaiKhoan>> GetTaiKhoan(int id)
+        public async Task<ActionResult<BaiGiang>> GetBaiGiang(int id)
         {
-            var taiKhoan = await _context.TaiKhoan.FindAsync(id);
+            var baiGiang = await _context.BaiGiang.FindAsync(id);
 
-            if (taiKhoan == null)
+            if (baiGiang == null)
             {
                 return NotFound();
             }
 
-            return taiKhoan;
+            return baiGiang;
         }
 
-        // PUT: api/TaiKhoans/5
+        // PUT: api/BaiGiangs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTaiKhoan(int id, TaiKhoan taiKhoan)
+        public async Task<IActionResult> PutBaiGiang(int id, BaiGiang baiGiang)
         {
-            if (id != taiKhoan.Id)
+            if (id != baiGiang.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(taiKhoan).State = EntityState.Modified;
+            _context.Entry(baiGiang).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TaiKhoanExists(id))
+                if (!BaiGiangExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             return NoContent();
         }
 
-        // POST: api/TaiKhoans
+        // POST: api/BaiGiangs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TaiKhoan>> PostTaiKhoan(TaiKhoan taiKhoan)
+        public async Task<ActionResult<BaiGiang>> PostBaiGiang(BaiGiang baiGiang)
         {
-            _context.TaiKhoan.Add(taiKhoan);
+            _context.BaiGiang.Add(baiGiang);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTaiKhoan", new { id = taiKhoan.Id }, taiKhoan);
+            return CreatedAtAction("GetBaiGiang", new { id = baiGiang.Id }, baiGiang);
         }
 
-        // DELETE: api/TaiKhoans/5
+        // DELETE: api/BaiGiangs/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTaiKhoan(int id)
+        public async Task<IActionResult> DeleteBaiGiang(int id)
         {
-            var taiKhoan = await _context.TaiKhoan.FindAsync(id);
-            if (taiKhoan == null)
+            var baiGiang = await _context.BaiGiang.FindAsync(id);
+            if (baiGiang == null)
             {
                 return NotFound();
             }
 
-            _context.TaiKhoan.Remove(taiKhoan);
+            _context.BaiGiang.Remove(baiGiang);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TaiKhoanExists(int id)
+        private bool BaiGiangExists(int id)
         {
-            return _context.TaiKhoan.Any(e => e.Id == id);
+            return _context.BaiGiang.Any(e => e.Id == id);
         }
     }
 }

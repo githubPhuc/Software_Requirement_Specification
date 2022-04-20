@@ -19,6 +19,46 @@ namespace Software_Requirement_Specification.Migrations
                 .HasAnnotation("ProductVersion", "5.0.16")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Software_Requirement_Specification.Models.BaiGiang", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("KichThuoc")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MonHocId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NguoiChinhSua")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NguoiChinhSuaCuoi")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NguoiDungId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("PheDuyet")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Ten")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TheLoai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MonHocId");
+
+                    b.HasIndex("NguoiDungId");
+
+                    b.ToTable("BaiGiang");
+                });
+
             modelBuilder.Entity("Software_Requirement_Specification.Models.DeThi", b =>
                 {
                     b.Property<int>("Id")
@@ -35,6 +75,9 @@ namespace Software_Requirement_Specification.Migrations
                     b.Property<DateTime>("NgayTao")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("NguoiDungId")
+                        .HasColumnType("int");
+
                     b.Property<int>("NguoiPheDuyet")
                         .HasColumnType("int");
 
@@ -47,25 +90,17 @@ namespace Software_Requirement_Specification.Migrations
                     b.Property<bool>("TinhTrang")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("VaiTroId")
-                        .HasColumnType("int");
-
                     b.Property<int>("idMonHoc")
                         .HasColumnType("int");
 
                     b.Property<int?>("monHocIdId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("tepIdId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("VaiTroId");
+                    b.HasIndex("NguoiDungId");
 
                     b.HasIndex("monHocIdId");
-
-                    b.HasIndex("tepIdId");
 
                     b.ToTable("DeThi");
                 });
@@ -131,6 +166,39 @@ namespace Software_Requirement_Specification.Migrations
                     b.HasIndex("vaiTroId");
 
                     b.ToTable("MonHoc");
+                });
+
+            modelBuilder.Entity("Software_Requirement_Specification.Models.NguoiDung", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LopHocId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TaiKhoanId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Ten")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VaitroId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LopHocId");
+
+                    b.HasIndex("TaiKhoanId");
+
+                    b.HasIndex("VaitroId");
+
+                    b.ToTable("NguoiDung");
                 });
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.PhanQuyen", b =>
@@ -199,6 +267,9 @@ namespace Software_Requirement_Specification.Migrations
                     b.Property<DateTime>("NgayGuiPheDuyet")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("NguoiDungId")
+                        .HasColumnType("int");
+
                     b.Property<int>("SoTaiLieuChoDuyet")
                         .HasColumnType("int");
 
@@ -212,6 +283,8 @@ namespace Software_Requirement_Specification.Migrations
 
                     b.HasIndex("MonHocIDId");
 
+                    b.HasIndex("NguoiDungId");
+
                     b.ToTable("TaiLieu");
                 });
 
@@ -222,29 +295,77 @@ namespace Software_Requirement_Specification.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("BaiGiangId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("DeThiId")
                         .HasColumnType("int");
 
                     b.Property<int>("KichThuoc")
                         .HasColumnType("int");
 
-                    b.Property<string>("LoaiFile")
+                    b.Property<string>("Loai")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("NgaySuaLanCuoi")
-                        .HasColumnType("datetime2");
+                    b.Property<int?>("TaiLieuId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("NguoiChinhSua")
+                    b.Property<string>("TenFile")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TenTep")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("VaiTroId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BaiGiangId");
+
                     b.HasIndex("DeThiId");
 
+                    b.HasIndex("TaiLieuId");
+
+                    b.HasIndex("VaiTroId");
+
                     b.ToTable("Tep");
+                });
+
+            modelBuilder.Entity("Software_Requirement_Specification.Models.ThuVien", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DiaChiTruyCap")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NgonNguXacDinh")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NienKhoaMacDinh")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SoDienThoai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TenHeThong")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TrangThai")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TruongHocId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TruongHocId")
+                        .IsUnique();
+
+                    b.ToTable("ThuVien");
                 });
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.TruongHoc", b =>
@@ -263,9 +384,6 @@ namespace Software_Requirement_Specification.Migrations
                     b.Property<string>("SoDienThoai")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TenThuVien")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("TenTruong")
                         .HasColumnType("nvarchar(max)");
 
@@ -274,6 +392,9 @@ namespace Software_Requirement_Specification.Migrations
 
                     b.Property<string>("WebSite")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("idThuVien")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -287,9 +408,6 @@ namespace Software_Requirement_Specification.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("IdTaiKhoan")
-                        .HasColumnType("int");
-
                     b.Property<string>("MaNguoiDung")
                         .HasColumnType("nvarchar(max)");
 
@@ -299,44 +417,62 @@ namespace Software_Requirement_Specification.Migrations
                     b.Property<string>("NguoiDung")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TaiKhoanId")
+                        .HasColumnType("int");
+
                     b.Property<string>("TenVaiTro")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TepRiengTuId")
-                        .HasColumnType("int");
 
                     b.Property<string>("ThongBao")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("taikhoanId")
+                    b.Property<int>("idQuyen")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("phanQuyenId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TepRiengTuId");
+                    b.HasIndex("TaiKhoanId");
 
-                    b.HasIndex("taikhoanId");
+                    b.HasIndex("phanQuyenId");
 
                     b.ToTable("VaiTro");
                 });
 
+            modelBuilder.Entity("Software_Requirement_Specification.Models.BaiGiang", b =>
+                {
+                    b.HasOne("Software_Requirement_Specification.Models.MonHoc", "MonHoc")
+                        .WithMany()
+                        .HasForeignKey("MonHocId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Software_Requirement_Specification.Models.NguoiDung", "NguoiDung")
+                        .WithMany("BaiGiang")
+                        .HasForeignKey("NguoiDungId");
+
+                    b.Navigation("MonHoc");
+
+                    b.Navigation("NguoiDung");
+                });
+
             modelBuilder.Entity("Software_Requirement_Specification.Models.DeThi", b =>
                 {
-                    b.HasOne("Software_Requirement_Specification.Models.VaiTro", null)
-                        .WithMany("De")
-                        .HasForeignKey("VaiTroId");
+                    b.HasOne("Software_Requirement_Specification.Models.NguoiDung", "NguoiDung")
+                        .WithMany("DeThi")
+                        .HasForeignKey("NguoiDungId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Software_Requirement_Specification.Models.MonHoc", "monHocId")
                         .WithMany("deThis")
                         .HasForeignKey("monHocIdId");
 
-                    b.HasOne("Software_Requirement_Specification.Models.Tep", "tepId")
-                        .WithMany()
-                        .HasForeignKey("tepIdId");
-
                     b.Navigation("monHocId");
 
-                    b.Navigation("tepId");
+                    b.Navigation("NguoiDung");
                 });
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.LopHoc", b =>
@@ -355,12 +491,37 @@ namespace Software_Requirement_Specification.Migrations
                         .HasForeignKey("lopHocIdId");
 
                     b.HasOne("Software_Requirement_Specification.Models.VaiTro", "vaiTro")
-                        .WithMany("monHocs")
+                        .WithMany()
                         .HasForeignKey("vaiTroId");
 
                     b.Navigation("lopHocId");
 
                     b.Navigation("vaiTro");
+                });
+
+            modelBuilder.Entity("Software_Requirement_Specification.Models.NguoiDung", b =>
+                {
+                    b.HasOne("Software_Requirement_Specification.Models.LopHoc", "LopHoc")
+                        .WithMany()
+                        .HasForeignKey("LopHocId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Software_Requirement_Specification.Models.TaiKhoan", "TaiKhoan")
+                        .WithMany()
+                        .HasForeignKey("TaiKhoanId");
+
+                    b.HasOne("Software_Requirement_Specification.Models.VaiTro", "VaiTro")
+                        .WithMany()
+                        .HasForeignKey("VaitroId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LopHoc");
+
+                    b.Navigation("TaiKhoan");
+
+                    b.Navigation("VaiTro");
                 });
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.TaiKhoan", b =>
@@ -378,29 +539,62 @@ namespace Software_Requirement_Specification.Migrations
                         .WithMany("taiLieus")
                         .HasForeignKey("MonHocIDId");
 
+                    b.HasOne("Software_Requirement_Specification.Models.NguoiDung", null)
+                        .WithMany("TaiLieu")
+                        .HasForeignKey("NguoiDungId");
+
                     b.Navigation("MonHocID");
                 });
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.Tep", b =>
                 {
-                    b.HasOne("Software_Requirement_Specification.Models.DeThi", null)
+                    b.HasOne("Software_Requirement_Specification.Models.BaiGiang", "BaiGiang")
+                        .WithMany()
+                        .HasForeignKey("BaiGiangId");
+
+                    b.HasOne("Software_Requirement_Specification.Models.DeThi", "DeThi")
                         .WithMany("teps")
                         .HasForeignKey("DeThiId");
+
+                    b.HasOne("Software_Requirement_Specification.Models.TaiLieu", "TaiLieu")
+                        .WithMany("tep")
+                        .HasForeignKey("TaiLieuId");
+
+                    b.HasOne("Software_Requirement_Specification.Models.VaiTro", "VaiTro")
+                        .WithMany("tep")
+                        .HasForeignKey("VaiTroId");
+
+                    b.Navigation("BaiGiang");
+
+                    b.Navigation("DeThi");
+
+                    b.Navigation("TaiLieu");
+
+                    b.Navigation("VaiTro");
+                });
+
+            modelBuilder.Entity("Software_Requirement_Specification.Models.ThuVien", b =>
+                {
+                    b.HasOne("Software_Requirement_Specification.Models.TruongHoc", "TruongHoc")
+                        .WithOne("thuVien")
+                        .HasForeignKey("Software_Requirement_Specification.Models.ThuVien", "TruongHocId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TruongHoc");
                 });
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.VaiTro", b =>
                 {
-                    b.HasOne("Software_Requirement_Specification.Models.Tep", "TepRiengTu")
-                        .WithMany()
-                        .HasForeignKey("TepRiengTuId");
-
-                    b.HasOne("Software_Requirement_Specification.Models.TaiKhoan", "taikhoan")
+                    b.HasOne("Software_Requirement_Specification.Models.TaiKhoan", null)
                         .WithMany("vaiTro")
-                        .HasForeignKey("taikhoanId");
+                        .HasForeignKey("TaiKhoanId");
 
-                    b.Navigation("taikhoan");
+                    b.HasOne("Software_Requirement_Specification.Models.PhanQuyen", "phanQuyen")
+                        .WithMany()
+                        .HasForeignKey("phanQuyenId");
 
-                    b.Navigation("TepRiengTu");
+                    b.Navigation("phanQuyen");
                 });
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.DeThi", b =>
@@ -420,21 +614,35 @@ namespace Software_Requirement_Specification.Migrations
                     b.Navigation("taiLieus");
                 });
 
+            modelBuilder.Entity("Software_Requirement_Specification.Models.NguoiDung", b =>
+                {
+                    b.Navigation("BaiGiang");
+
+                    b.Navigation("DeThi");
+
+                    b.Navigation("TaiLieu");
+                });
+
             modelBuilder.Entity("Software_Requirement_Specification.Models.TaiKhoan", b =>
                 {
                     b.Navigation("vaiTro");
                 });
 
+            modelBuilder.Entity("Software_Requirement_Specification.Models.TaiLieu", b =>
+                {
+                    b.Navigation("tep");
+                });
+
             modelBuilder.Entity("Software_Requirement_Specification.Models.TruongHoc", b =>
                 {
                     b.Navigation("lopHocs");
+
+                    b.Navigation("thuVien");
                 });
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.VaiTro", b =>
                 {
-                    b.Navigation("De");
-
-                    b.Navigation("monHocs");
+                    b.Navigation("tep");
                 });
 #pragma warning restore 612, 618
         }

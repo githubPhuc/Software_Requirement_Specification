@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Software_Requirement_Specification.Data;
 using Software_Requirement_Specification.Models;
 
-namespace Software_Requirement_Specification.Controllers
+namespace Software_Requirement_Specification.Areas.API.Controller
 {
     [Route("api/[controller]")]
     [ApiController]

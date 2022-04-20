@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Software_Requirement_Specification.Data;
 using Software_Requirement_Specification.Models;
 
-namespace Software_Requirement_Specification.Controllers
+namespace Software_Requirement_Specification.Areas.API.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -45,7 +45,7 @@ namespace Software_Requirement_Specification.Controllers
         // PUT: api/VaiTroes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutVaiTro(int id, [FromBody] VaiTro vaiTro)
+        public async Task<IActionResult> PutVaiTro(int id, VaiTro vaiTro)
         {
             if (id != vaiTro.Id)
             {
@@ -76,7 +76,7 @@ namespace Software_Requirement_Specification.Controllers
         // POST: api/VaiTroes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<VaiTro>> PostVaiTro([FromBody] VaiTro vaiTro)
+        public async Task<ActionResult<VaiTro>> PostVaiTro(VaiTro vaiTro)
         {
             _context.VaiTro.Add(vaiTro);
             await _context.SaveChangesAsync();

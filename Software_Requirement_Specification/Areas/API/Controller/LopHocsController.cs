@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Software_Requirement_Specification.Data;
 using Software_Requirement_Specification.Models;
 
-namespace Software_Requirement_Specification.Controllers
+namespace Software_Requirement_Specification.Areas.API.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -45,7 +45,7 @@ namespace Software_Requirement_Specification.Controllers
         // PUT: api/LopHocs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLopHoc(int id, [FromBody] LopHoc lopHoc)
+        public async Task<IActionResult> PutLopHoc(int id, LopHoc lopHoc)
         {
             if (id != lopHoc.Id)
             {
@@ -76,7 +76,7 @@ namespace Software_Requirement_Specification.Controllers
         // POST: api/LopHocs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<LopHoc>> PostLopHoc([FromBody]  LopHoc lopHoc)
+        public async Task<ActionResult<LopHoc>> PostLopHoc(LopHoc lopHoc)
         {
             _context.LopHoc.Add(lopHoc);
             await _context.SaveChangesAsync();
