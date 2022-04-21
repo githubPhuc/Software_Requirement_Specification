@@ -21,29 +21,45 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             _context = context;
         }
 
-        // GET: api/MonHocs
+        //GET: api/MonHocs
+       //[HttpGet]
+       // public async Task<ActionResult<IEnumerable<MonHoc>>> GetMonHoc()
+       // {
+       //     return await _context.MonHoc.ToListAsync();
+       // }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MonHoc>>> GetMonHoc()
-        {
-            return await _context.MonHoc.ToListAsync();
-        }
+        //public ActionResult xemTaiLieumonHoc(int id)
+        //{
+        //    var data = (from a in _context.NguoiDung
+        //                join b in _context.MonHoc on a.Id equals b.nguoiDungId
+        //                join c in _context.TaiLieu on b.Id equals c.monhocId
+        //                where b.Id == id && a.VaiTro.TenVaiTro == "Giáo Viên"
+        //                select new
+        //                {
+        //                    b.Id,
+        //                    b.TenMonHoc,
+        //                    a.Ten,
+        //                    c.SoTaiLieuChoDuyet,
+        //                    c.TinhTrang,
+        //                    c.NgayGuiPheDuyet
+        //                });
+        //    return Ok(data);
+        //}
         [HttpGet]
-        public ActionResult xemTaiLieumonHoc(int id)
+        public ActionResult xemChiTietMonHoc(int id)
         {
-            var data = (from a in _context.NguoiDung
-                        join b in _context.MonHoc on a.Id equals b.nguoiDungId
-                        join c in _context.TaiLieu on b.Id equals c.monhocId
-                        where b.Id == id && a.VaiTro.TenVaiTro=="Giáo Viên"
+            var data = (from d in _context.NguoiDung
+                        join a in _context.MonHoc on d.Id equals a.nguoiDungId
+                        where a.Id == id
                         select new
                         {
-                            b.Id,
-                            b.TenMonHoc,
-                            a.Ten,
-                            c.SoTaiLieuChoDuyet,
-                            c.TinhTrang,
-                            c.NgayGuiPheDuyet
-                        });
+                            a.Id,
+                            d.Ten,
+                            a.TenMonHoc,
+                            a.MoTa
+                        }).ToList();
             return Ok(data);
+
         }
 
         // GET: api/MonHocs/5

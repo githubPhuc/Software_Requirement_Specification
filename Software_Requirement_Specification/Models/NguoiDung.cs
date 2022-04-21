@@ -16,6 +16,7 @@ namespace Software_Requirement_Specification.Models
         public LopHoc LopHoc { get; set; }
         public int VaitroId { get; set; }
         public VaiTro VaiTro { get; set; }
+        public int IdtaiKhoan { get; set; }
         public TaiKhoan TaiKhoan { get; set; }
 
         public List<TaiLieu> TaiLieu { get; set; }

@@ -30,6 +30,7 @@ namespace Software_Requirement_Specification
             services.AddSession();
             services.AddDbContext<Software_Requirement_SpecificationContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Software_Requirement_SpecificationContext")));
+            services.ConfigureApplicationCookie(options => { options.LoginPath = "/Api/log"; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

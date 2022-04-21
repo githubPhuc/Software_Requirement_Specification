@@ -22,28 +22,46 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         }
 
         // GET: api/NguoiDungs
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<NguoiDung>>> xemNguoiDung()
-        {
-            return await _context.NguoiDung.ToListAsync();
-        }
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<NguoiDung>>> xemNguoiDung()
+        //{
+        //    return await _context.NguoiDung.ToListAsync();
+        //}
 
         [HttpGet]
         public IActionResult xemVaiTro(int id)
         {
             var vaitro = (from a in _context.NguoiDung
-                         join b in _context.VaiTro on a.VaitroId equals b.Id
-                         where a.Id == id
-                         select new
-                         {
-                             a.Id,
-                             a.Ten,
-                             a.Email,
-                             b.TenVaiTro
-                         }).ToList();
-           
+                          join b in _context.VaiTro on a.VaitroId equals b.Id
+                          where a.Id == id
+                          select new
+                          {
+                              a.Id,
+                              a.Ten,
+                              a.Email,
+                              b.TenVaiTro
+                          }).ToList();
+
             return Ok(vaitro);
         }
+        //[HttpGet]
+        //public ActionResult timKiemMonGiangDay(int id)// Người dùng tìm kiếm môn học 
+        //{
+        //    var data = (from a in _context.MonHoc
+        //               join b in _context.NguoiDung on a.nguoiDungId equals b.Id
+        //               join c in _context.TaiKhoan on b.IdtaiKhoan equals c.Id
+        //               join d in _context.PhanQuyen on c.idQuyen equals d.Id
+        //               where d.TenQuyen == "Giáo Viên" && d.Id==id
+        //               select new
+        //               {
+        //                   a.Id,
+        //                   a.TenMonHoc,
+        //                   b.Ten,
+        //                   a.MoTa
+
+        //               }).ToList();
+        //    return Ok(data);
+        //}
         // GET: api/NguoiDungs/5
         [HttpGet("{id}")]
         public async Task<ActionResult<NguoiDung>> xemChiTiet(int id)
