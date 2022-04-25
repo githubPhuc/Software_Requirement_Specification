@@ -14,6 +14,7 @@ namespace Software_Requirement_Specification.Models
         //Khởi tạo 2:41 12/4/2022
         [Key]
         public int Id { get; set; }
+        
         [Display(Name = "Môn học")]
         public int idMonHoc { get; set; }
         public MonHoc monHocId { get; set; }

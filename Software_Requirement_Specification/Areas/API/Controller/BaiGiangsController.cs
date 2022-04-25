@@ -22,25 +22,35 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         }
 
         // GET: api/BaiGiangs
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<BaiGiang>>> GetBaiGiang()
+        //{
+        //    return await _context.BaiGiang.ToListAsync();
+        //}
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BaiGiang>>> GetBaiGiang()
+        public async Task<ActionResult<IEnumerable<BaiGiang>>> LocBaiGiang(int monhoc)
         {
-            return await _context.BaiGiang.ToListAsync();
+            var result = await _context.BaiGiang.ToListAsync();
+            if (monhoc != 0)
+            {
+                result = await _context.BaiGiang.Where(b => b.MonHocId == monhoc).ToListAsync();
+            }
+            return result;
         }
 
         // GET: api/BaiGiangs/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<BaiGiang>> GetBaiGiang(int id)
-        {
-            var baiGiang = await _context.BaiGiang.FindAsync(id);
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<BaiGiang>> GetBaiGiang(int id)
+        //{
+        //    var baiGiang = await _context.BaiGiang.FindAsync(id);
 
-            if (baiGiang == null)
-            {
-                return NotFound();
-            }
+        //    if (baiGiang == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return baiGiang;
-        }
+        //    return baiGiang;
+        //}
 
         // PUT: api/BaiGiangs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

@@ -27,8 +27,43 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         {
             return await _context.DeThi.ToListAsync();
         }
+        [HttpPut("{id}")]
+        public async Task<ActionResult<IEnumerable<DeThi>>> duyetdethi(int id)
+        {
+            var deThi = await _context.DeThi.FindAsync(id);
 
-        // GET: api/DeThis/5
+            if (deThi == null )
+            {
+                return NotFound();
+            }
+            deThi.PheDuyet = true;
+            deThi.NguoiPheDuyet = Convert.ToInt32(HttpContext.Session.GetString("Id"));
+            _context.Update(deThi);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetDeThi", new { id = deThi.Id }, deThi);
+        }
+        //[HttpGet]
+        //public async Task<ActionResult> xemNganHangDeThi()
+        //{
+
+        //    var data = (from a in _context.DeThi
+        //              join b in _context.NguoiDung on a.NguoiDungId equals b.Id
+        //              join c in _context.MonHoc on a.idMonHoc equals c.Id
+        //              select new
+        //              {
+        //                  MonHoc = c.TenMonHoc,
+        //                  GiangVien = b.Ten,
+        //                  HinhThuc = a.HinhThuc,
+        //                  ThoiLuong = a.ThoiLuong,
+        //                  TinhTrang = a.TinhTrang
+
+        //              }).ToList();
+
+        //    return Ok(data);
+        //}
+
+        //GET: api/DeThis/5
         [HttpGet("{id}")]
         public async Task<ActionResult<DeThi>> GetDeThi(int id)
         {
@@ -78,7 +113,11 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         [HttpPost]
         public async Task<ActionResult<DeThi>> PostDeThi([FromBody] DeThi deThi)
         {
+
             _context.DeThi.Add(deThi);
+            deThi.PheDuyet = false;
+            deThi.NguoiPheDuyet = 1;
+            deThi.NgayTao = DateTime.Now;
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetDeThi", new { id = deThi.Id }, deThi);

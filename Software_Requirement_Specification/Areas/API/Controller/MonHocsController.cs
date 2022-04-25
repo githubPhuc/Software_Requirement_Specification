@@ -27,7 +27,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
        // {
        //     return await _context.MonHoc.ToListAsync();
        // }
-        [HttpGet]
+        //[HttpGet]
         //public ActionResult xemTaiLieumonHoc(int id)
         //{
         //    var data = (from a in _context.NguoiDung
@@ -46,27 +46,9 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         //    return Ok(data);
         //}
         [HttpGet]
-        public ActionResult xemChiTietMonHoc(int id)
+        public async Task<ActionResult<IEnumerable<MonHoc>>> SearchMonHoc(string data)
         {
-            var data = (from d in _context.NguoiDung
-                        join a in _context.MonHoc on d.Id equals a.nguoiDungId
-                        where a.Id == id
-                        select new
-                        {
-                            a.Id,
-                            d.Ten,
-                            a.TenMonHoc,
-                            a.MoTa
-                        }).ToList();
-            return Ok(data);
-
-        }
-
-        // GET: api/MonHocs/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<MonHoc>> GetMonHoc(int id)
-        {
-            var monHoc = await _context.MonHoc.FindAsync(id);
+            var monHoc = await _context.MonHoc.Where(m => m.TenMonHoc.Contains(data)).ToListAsync();
 
             if (monHoc == null)
             {
@@ -75,6 +57,36 @@ namespace Software_Requirement_Specification.Areas.API.Controller
 
             return monHoc;
         }
+        //[HttpGet]
+        //public ActionResult xemChiTietMonHoc(int id)
+        //{
+        //    var data = (from d in _context.NguoiDung
+        //                join a in _context.MonHoc on d.Id equals a.nguoiDungId
+        //                where a.Id == id
+        //                select new
+        //                {
+        //                    a.Id,
+        //                    d.Ten,
+        //                    a.TenMonHoc,
+        //                    a.MoTa
+        //                }).ToList();
+        //    return Ok(data);
+
+        //}
+
+        //// GET: api/MonHocs/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<MonHoc>> GetMonHoc(int id)
+        //{
+        //    var monHoc = await _context.MonHoc.FindAsync(id);
+
+        //    if (monHoc == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return monHoc;
+        //}
 
         // PUT: api/MonHocs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
