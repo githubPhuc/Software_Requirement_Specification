@@ -12,47 +12,48 @@ namespace Software_Requirement_Specification.Areas.API.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PhanQuyensController : ControllerBase
+    public class ThongBaosController : ControllerBase
     {
         private readonly Software_Requirement_SpecificationContext _context;
 
-        public PhanQuyensController(Software_Requirement_SpecificationContext context)
+        public ThongBaosController(Software_Requirement_SpecificationContext context)
         {
             _context = context;
         }
 
-        // GET: api/PhanQuyens
+        // GET: api/ThongBaos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PhanQuyen>>> GetPhanQuyen()
+        public async Task<ActionResult<IEnumerable<ThongBao>>> GetThongBao()
         {
-            return await _context.PhanQuyen.ToListAsync();
+            return await _context.ThongBao.ToListAsync();
         }
+       
 
-        // GET: api/PhanQuyens/5
+        // GET: api/ThongBaos/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PhanQuyen>> GetPhanQuyen(int id)
+        public async Task<ActionResult<ThongBao>> GetThongBao(int id)
         {
-            var phanQuyen = await _context.PhanQuyen.FindAsync(id);
+            var thongBao = await _context.ThongBao.FindAsync(id);
 
-            if (phanQuyen == null)
+            if (thongBao == null)
             {
                 return NotFound();
             }
 
-            return phanQuyen;
+            return thongBao;
         }
 
-        // PUT: api/PhanQuyens/5
+        // PUT: api/ThongBaos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPhanQuyen(int id, [FromBody] PhanQuyen phanQuyen)
+        public async Task<IActionResult> PutThongBao(int id, ThongBao thongBao)
         {
-            if (id != phanQuyen.Id)
+            if (id != thongBao.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(phanQuyen).State = EntityState.Modified;
+            _context.Entry(thongBao).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +61,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PhanQuyenExists(id))
+                if (!ThongBaoExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +74,36 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             return NoContent();
         }
 
-        // POST: api/PhanQuyens
+        // POST: api/ThongBaos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PhanQuyen>> PostPhanQuyen([FromBody] PhanQuyen phanQuyen)
+        public async Task<ActionResult<ThongBao>> PostThongBao(ThongBao thongBao)
         {
-            _context.PhanQuyen.Add(phanQuyen);
+            _context.ThongBao.Add(thongBao);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPhanQuyen", new { id = phanQuyen.Id }, phanQuyen);
+            return CreatedAtAction("GetThongBao", new { id = thongBao.Id }, thongBao);
         }
 
-        // DELETE: api/PhanQuyens/5
+        // DELETE: api/ThongBaos/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePhanQuyen(int id)
+        public async Task<IActionResult> DeleteThongBao(int id)
         {
-            var phanQuyen = await _context.PhanQuyen.FindAsync(id);
-            if (phanQuyen == null)
+            var thongBao = await _context.ThongBao.FindAsync(id);
+            if (thongBao == null)
             {
                 return NotFound();
             }
 
-            _context.PhanQuyen.Remove(phanQuyen);
+            _context.ThongBao.Remove(thongBao);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool PhanQuyenExists(int id)
+        private bool ThongBaoExists(int id)
         {
-            return _context.PhanQuyen.Any(e => e.Id == id);
+            return _context.ThongBao.Any(e => e.Id == id);
         }
     }
 }

@@ -12,47 +12,49 @@ namespace Software_Requirement_Specification.Areas.API.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TruongHocsController : ControllerBase
+    public class BoMonsController : ControllerBase
     {
         private readonly Software_Requirement_SpecificationContext _context;
 
-        public TruongHocsController(Software_Requirement_SpecificationContext context)
+        public BoMonsController(Software_Requirement_SpecificationContext context)
         {
             _context = context;
         }
 
-        // GET: api/TruongHocs
+        // GET: api/BoMons
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TruongHoc>>> GetTruongHoc()
+        public async Task<ActionResult<IEnumerable<BoMon>>> GetBoMon()
         {
-            return await _context.TruongHoc.ToListAsync();
+            return await _context.BoMon.ToListAsync();
         }
 
-        // GET: api/TruongHocs/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<TruongHoc>> GetTruongHoc(int id)
-        {
-            var truongHoc = await _context.TruongHoc.FindAsync(id);
+        
 
-            if (truongHoc == null)
+        // GET: api/BoMons/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<BoMon>> GetBoMon(int id)
+        {
+            var boMon = await _context.BoMon.FindAsync(id);
+
+            if (boMon == null)
             {
                 return NotFound();
             }
 
-            return truongHoc;
+            return boMon;
         }
 
-        // PUT: api/TruongHocs/5
+        // PUT: api/BoMons/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTruongHoc(int id, TruongHoc truongHoc)
+        public async Task<IActionResult> PutBoMon(int id, BoMon boMon)
         {
-            if (id != truongHoc.Id)
+            if (id != boMon.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(truongHoc).State = EntityState.Modified;
+            _context.Entry(boMon).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +62,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TruongHocExists(id))
+                if (!BoMonExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +75,36 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             return NoContent();
         }
 
-        // POST: api/TruongHocs
+        // POST: api/BoMons
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TruongHoc>> PostTruongHoc(TruongHoc truongHoc)
+        public async Task<ActionResult<BoMon>> PostBoMon(BoMon boMon)
         {
-            _context.TruongHoc.Add(truongHoc);
+            _context.BoMon.Add(boMon);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTruongHoc", new { id = truongHoc.Id }, truongHoc);
+            return CreatedAtAction("GetBoMon", new { id = boMon.Id }, boMon);
         }
 
-        // DELETE: api/TruongHocs/5
+        // DELETE: api/BoMons/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTruongHoc(int id)
+        public async Task<IActionResult> DeleteBoMon(int id)
         {
-            var truongHoc = await _context.TruongHoc.FindAsync(id);
-            if (truongHoc == null)
+            var boMon = await _context.BoMon.FindAsync(id);
+            if (boMon == null)
             {
                 return NotFound();
             }
 
-            _context.TruongHoc.Remove(truongHoc);
+            _context.BoMon.Remove(boMon);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TruongHocExists(int id)
+        private bool BoMonExists(int id)
         {
-            return _context.TruongHoc.Any(e => e.Id == id);
+            return _context.BoMon.Any(e => e.Id == id);
         }
     }
 }

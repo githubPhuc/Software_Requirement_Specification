@@ -20,6 +20,19 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         {
             _context = context;
         }
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Tep>>> locDanhSachTep(string context)
+        {
+            if (string.IsNullOrEmpty(context))
+            {
+                return NotFound();
+            }
+            else
+            {
+                var data = await _context.Tep.Where(a => a.TheLoai.Contains(context)).ToListAsync();
+                return data;
+            }
+        }
 
         // GET: api/Teps
         [HttpGet]

@@ -45,7 +45,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // PUT: api/ThuViens/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutThuVien(int id, ThuVien thuVien)
+        public async Task<IActionResult> PutThuVien(int id, [FromBody] ThuVien thuVien)
         {
             if (id != thuVien.Id)
             {
@@ -76,7 +76,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // POST: api/ThuViens
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ThuVien>> PostThuVien(ThuVien thuVien)
+        public async Task<ActionResult<ThuVien>> PostThuVien([FromBody] ThuVien thuVien)
         {
             _context.ThuVien.Add(thuVien);
             await _context.SaveChangesAsync();

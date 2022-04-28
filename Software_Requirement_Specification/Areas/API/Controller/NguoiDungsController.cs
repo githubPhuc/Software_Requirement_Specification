@@ -23,14 +23,64 @@ namespace Software_Requirement_Specification.Areas.API.Controller
 
         // GET: api/NguoiDungs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<NguoiDung>>> GetNguoiDung()
+        [Route("xemnguoidung")]
+        public async Task<ActionResult<IEnumerable<NguoiDung>>> xemNguoiDung()
         {
             return await _context.NguoiDung.ToListAsync();
         }
 
+        [HttpGet]
+        [Route("xemvaitronguoidung/{id}")]
+        public IActionResult xemVaiTro(int id)
+        {
+            var vaitro = (from a in _context.NguoiDung
+                          join b in _context.VaiTro on a.VaitroId equals b.Id
+                          where a.Id == id
+                          select new
+                          {
+                              a.Id,
+                              a.Ten,
+                              a.Email,
+                              b.TenVaiTro
+                          }).ToList();
+
+            return Ok(vaitro);
+        }
+        [HttpGet("{id}")]
+        [Route("locnguoidung/{id}")]
+        public async Task<ActionResult<IEnumerable<NguoiDung>>> LocNguoiDung(int id)
+        {
+            if (id <= 0)
+            {
+                return NotFound();
+            }
+            var result = await _context.NguoiDung.Where(v => v.VaitroId == id).ToListAsync();
+            if (result != null)
+                return result;
+            else
+                return NotFound();
+        }
+        [HttpGet]
+        [Route("timkiemmonday/{id}")]
+        public ActionResult timKiemMonGiangDay(int id)// Người dùng tìm kiếm môn học 
+        {
+            var data = (from a in _context.MonHoc
+                        join b in _context.NguoiDung on a.nguoiDungId equals b.Id
+                        join c in _context.PhanQuyen on b.TaiKhoan.Id equals c.Id
+                        where c.TenQuyen == "Giáo Viên" && b.Id == id
+                        select new
+                        {
+                            a.Id,
+                            a.TenMonHoc,
+                            b.Ten,
+                            a.MoTa
+
+                        }).ToList();
+            return Ok(data);
+        }
         // GET: api/NguoiDungs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<NguoiDung>> GetNguoiDung(int id)
+        public async Task<ActionResult<NguoiDung>> xemChiTiet(int id)
         {
             var nguoiDung = await _context.NguoiDung.FindAsync(id);
 
@@ -45,7 +95,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // PUT: api/NguoiDungs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNguoiDung(int id, NguoiDung nguoiDung)
+        public async Task<IActionResult> chinhSuaNguoiDung(int id, [FromBody] NguoiDung nguoiDung)
         {
             if (id != nguoiDung.Id)
             {
@@ -76,7 +126,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // POST: api/NguoiDungs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<NguoiDung>> PostNguoiDung(NguoiDung nguoiDung)
+        public async Task<ActionResult<NguoiDung>> themNguoiDung([FromBody] NguoiDung nguoiDung)
         {
             _context.NguoiDung.Add(nguoiDung);
             await _context.SaveChangesAsync();
@@ -86,7 +136,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
 
         // DELETE: api/NguoiDungs/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNguoiDung(int id)
+        public async Task<IActionResult> xoaNguoiDung(int id)
         {
             var nguoiDung = await _context.NguoiDung.FindAsync(id);
             if (nguoiDung == null)

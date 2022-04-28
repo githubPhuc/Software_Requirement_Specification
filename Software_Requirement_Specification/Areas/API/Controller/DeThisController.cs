@@ -23,14 +23,14 @@ namespace Software_Requirement_Specification.Areas.API.Controller
 
         // GET: api/DeThis
         [HttpGet]
+        [Route("XemDeThi")]
         public async Task<ActionResult<IEnumerable<DeThi>>> GetDeThi()
         {
             return await _context.DeThi.ToListAsync();
         }
-
-        // GET: api/DeThis/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<DeThi>> GetDeThi(int id)
+        [HttpPut("{id}")]
+        [Route("duyetdethi/{id}")]
+        public async Task<ActionResult<IEnumerable<DeThi>>> duyetdethi(int id)
         {
             var deThi = await _context.DeThi.FindAsync(id);
 
@@ -38,14 +38,155 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             {
                 return NotFound();
             }
+            deThi.PheDuyet = true;
+            deThi.NguoiPheDuyet = Convert.ToInt32(HttpContext.Session.GetString("Id"));
+            _context.Update(deThi);
+            await _context.SaveChangesAsync();
 
-            return deThi;
+            return CreatedAtAction("GetDeThi", new { id = deThi.Id }, deThi);
         }
+        [HttpPut("{id}")]
+
+        [Route("huyduyetdethi/{id}")]
+        public async Task<ActionResult<IEnumerable<DeThi>>> huyduyetdethi(int id)
+        {
+            var deThi = await _context.DeThi.FindAsync(id);
+
+            if (deThi == null)
+            {
+                return NotFound();
+            }
+            deThi.PheDuyet = false;
+            deThi.NguoiPheDuyet = Convert.ToInt32(HttpContext.Session.GetString("Id"));
+            _context.Update(deThi);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetDeThi", new { id = deThi.Id }, deThi);
+        }
+        [HttpGet]
+        [Route("searchtheoten/{data}")]
+        public async Task<ActionResult<IEnumerable<DeThi>>> searchDeThiTenDeThi(string data)
+        {
+
+            if (string.IsNullOrEmpty(data))
+            {
+                return NotFound();
+            }
+            else
+            {
+
+                var ss = await _context.DeThi.Where(a => a.tendethi.Contains(data)).ToListAsync();
+                return ss;
+                
+            }
+
+        }
+        [HttpGet]
+        [Route("timdethitheobomon")]
+        public async Task<ActionResult<IEnumerable<DeThi>>> searchDeThitheobomon(int bomon)
+        {
+
+            if (bomon==null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var x = await _context.BoMon.FindAsync(bomon);
+                var result = (from a in _context.DeThi
+                              join b in _context.MonHoc on a.idMonHoc equals b.Id
+                              where b.BoMonId == bomon
+                              select new
+                              {
+                                  LoaiFile = a.Tep.TheLoai,
+                                  TenDeThi = a.tendethi,
+                                  ThoiLuong = a.ThoiLuong,
+                                  ThoiGianTao = a.NgayTao,
+                                  TinhTrang = a.TinhTrang
+                              }).ToList();
+
+                return Ok(result);
+
+            }
+
+        }
+        [HttpGet]
+        [Route("searchtheomonhoc/{id}")]
+        public async Task<ActionResult<IEnumerable<DeThi>>> searchDeThimonhoc(int id)
+        {
+
+            if (id != null)
+            {
+                var ss = await _context.DeThi.Where(a => a.idMonHoc==id).ToListAsync();
+                return ss;
+            }
+            else
+            {
+                return NotFound();
+            }
+
+        }
+        [HttpGet]
+        [Route("chitietdethi/{id}")]
+        public async Task<ActionResult> ChiTietDeThi(int id)
+        {
+            var data = (from a in _context.DeThi
+                        join b in _context.NguoiDung on a.NguoiDungId equals b.Id
+                        join c in _context.MonHoc on a.idMonHoc equals c.Id
+                        where a.Id == id
+                        select new
+                        {
+                            TenDeThi = a.tendethi,
+                            MonHoc = c.TenMonHoc,
+                            GiangVien = b.Ten,
+                            HinhThuc = a.HinhThuc,
+                            ThoiLuong = a.ThoiLuong,
+                            NgayTao = a.NgayTao,
+                            TinhTrang = a.TinhTrang
+
+                        }).ToList();
+            return Ok(data);
+        }
+        [HttpGet]
+        [Route("DanhSachDethi")]
+        public async Task<IActionResult> NganHangDeThi() //admin
+        {
+
+            var data =  (from a in _context.NguoiDung
+                        join b in _context.DeThi  on a.Id equals  b.NguoiDungId
+                        join c in _context.MonHoc on b.idMonHoc equals c.Id
+                        select new
+                          {
+                              b.tendethi,
+                              c.TenMonHoc,
+                              a.Ten,
+                              b.HinhThuc,
+                              b.ThoiLuong,
+                              b.TinhTrang
+
+                          }).ToList();
+
+            return Ok(data);
+        }
+
+        //GET: api/DeThis/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<DeThi>> GetDeThi(int id)
+        //{
+        //    var deThi = await _context.DeThi.FindAsync(id);
+
+        //    if (deThi == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return deThi;
+        //}
 
         // PUT: api/DeThis/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDeThi(int id, DeThi deThi)
+        public async Task<IActionResult> PutDeThi(int id, [FromBody] DeThi deThi)
         {
             if (id != deThi.Id)
             {
@@ -76,9 +217,13 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // POST: api/DeThis
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<DeThi>> PostDeThi(DeThi deThi)
+        public async Task<ActionResult<DeThi>> PostDeThi([FromBody] DeThi deThi)
         {
+
             _context.DeThi.Add(deThi);
+            deThi.PheDuyet = false;
+            deThi.NguoiPheDuyet = 1;
+            deThi.NgayTao = DateTime.Now;
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetDeThi", new { id = deThi.Id }, deThi);
