@@ -20,6 +20,19 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         {
             _context = context;
         }
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Tep>>> locDanhSachTep(string context)
+        {
+            if (string.IsNullOrEmpty(context))
+            {
+                return NotFound();
+            }
+            else
+            {
+                var data = await _context.Tep.Where(a => a.TheLoai.Contains(context)).ToListAsync();
+                return data;
+            }
+        }
 
         // GET: api/Teps
         [HttpGet]
@@ -45,7 +58,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // PUT: api/Teps/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTep(int id, [FromBody] Tep tep)
+        public async Task<IActionResult> PutTep(int id, Tep tep)
         {
             if (id != tep.Id)
             {
@@ -76,7 +89,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // POST: api/Teps
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Tep>> PostTep([FromBody] Tep tep)
+        public async Task<ActionResult<Tep>> PostTep(Tep tep)
         {
             _context.Tep.Add(tep);
             await _context.SaveChangesAsync();

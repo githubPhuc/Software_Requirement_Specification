@@ -14,7 +14,6 @@ namespace Software_Requirement_Specification.Data
         {
         }
 
-        public DbSet<Software_Requirement_Specification.Models.TruongHoc> TruongHoc { get; set; }
 
         public DbSet<Software_Requirement_Specification.Models.LopHoc> LopHoc { get; set; }
 
@@ -45,5 +44,14 @@ namespace Software_Requirement_Specification.Data
 
        
         public DbSet<Software_Requirement_Specification.Models.BaiGiang> BaiGiang { get; set; }
+
+       
+        public DbSet<Software_Requirement_Specification.Models.ThongBao> ThongBao { get; set; }
+
+       
+        public DbSet<Software_Requirement_Specification.Models.LoaiLopHoc> LoaiLopHoc { get; set; }
+
+       
+        public DbSet<Software_Requirement_Specification.Models.BoMon> BoMon { get; set; }
     }
 }

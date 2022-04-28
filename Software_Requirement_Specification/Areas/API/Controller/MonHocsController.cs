@@ -22,30 +22,32 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         }
 
         //GET: api/MonHocs
-       //[HttpGet]
-       // public async Task<ActionResult<IEnumerable<MonHoc>>> GetMonHoc()
-       // {
-       //     return await _context.MonHoc.ToListAsync();
-       // }
-        //[HttpGet]
-        //public ActionResult xemTaiLieumonHoc(int id)
-        //{
-        //    var data = (from a in _context.NguoiDung
-        //                join b in _context.MonHoc on a.Id equals b.nguoiDungId
-        //                join c in _context.TaiLieu on b.Id equals c.monhocId
-        //                where b.Id == id && a.VaiTro.TenVaiTro == "Giáo Viên"
-        //                select new
-        //                {
-        //                    b.Id,
-        //                    b.TenMonHoc,
-        //                    a.Ten,
-        //                    c.SoTaiLieuChoDuyet,
-        //                    c.TinhTrang,
-        //                    c.NgayGuiPheDuyet
-        //                });
-        //    return Ok(data);
-        //}
+       [HttpGet]
+       [Route("Xemmonhoc")]
+        public async Task<ActionResult<IEnumerable<MonHoc>>> GetMonHoc()
+        {
+            return await _context.MonHoc.ToListAsync();
+        }
         [HttpGet]
+        [Route("xemtailieumonhoc/{id}")]
+        public ActionResult xemTaiLieumonHoc(int id)
+        {
+            var data = (from a in _context.NguoiDung
+                        join b in _context.MonHoc on a.Id equals b.nguoiDungId
+                        join c in _context.TaiLieu on b.Id equals c.monhocId
+                        where b.Id == id && a.VaiTro.idQuyen == 1
+                        select new
+                        {
+                            b.Id,
+                            b.TenMonHoc,
+                            a.Ten,
+                            c.TinhTrang,
+                            c.NgayGuiPheDuyet
+                        });
+            return Ok(data);
+        }
+        [HttpGet]
+        [Route("timkiemmonhoc/{data}")]
         public async Task<ActionResult<IEnumerable<MonHoc>>> SearchMonHoc(string data)
         {
             var monHoc = await _context.MonHoc.Where(m => m.TenMonHoc.Contains(data)).ToListAsync();
@@ -57,24 +59,25 @@ namespace Software_Requirement_Specification.Areas.API.Controller
 
             return monHoc;
         }
-        //[HttpGet]
-        //public ActionResult xemChiTietMonHoc(int id)
-        //{
-        //    var data = (from d in _context.NguoiDung
-        //                join a in _context.MonHoc on d.Id equals a.nguoiDungId
-        //                where a.Id == id
-        //                select new
-        //                {
-        //                    a.Id,
-        //                    d.Ten,
-        //                    a.TenMonHoc,
-        //                    a.MoTa
-        //                }).ToList();
-        //    return Ok(data);
+        [HttpGet]
+        [Route("Xemchitietmonhoc/{id}")]
+        public ActionResult xemChiTietMonHoc(int id)
+        {
+            var data = (from d in _context.NguoiDung
+                        join a in _context.MonHoc on d.Id equals a.nguoiDungId
+                        where a.Id == id
+                        select new
+                        {
+                            a.Id,
+                            d.Ten,
+                            a.TenMonHoc,
+                            a.MoTa
+                        }).ToList();
+            return Ok(data);
 
-        //}
+        }
 
-        //// GET: api/MonHocs/5
+        // GET: api/MonHocs/5
         //[HttpGet("{id}")]
         //public async Task<ActionResult<MonHoc>> GetMonHoc(int id)
         //{

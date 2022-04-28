@@ -11,11 +11,9 @@ namespace Software_Requirement_Specification.Models
         //1 môn học có nhiều đề thi
         //1 đề thi do 1 giáo viên cung cấp
         //Trần Ninh phúc
-        //Khởi tạo 2:41 12/4/2022
-        [Key]
+        //Khởi tạo 2:41 25/4/2022
         public int Id { get; set; }
-        
-        [Display(Name = "Môn học")]
+        public string tendethi { get; set; }
         public int idMonHoc { get; set; }
         public MonHoc monHocId { get; set; }
         [Display(Name = "Hình thức thi")]
@@ -34,6 +32,7 @@ namespace Software_Requirement_Specification.Models
         public bool PheDuyet { get; set; }
         [Display(Name = "Ghi chú")]
         public string GhiChu { get; set; }
-        public List<Tep> teps { get; set; }
+        public int TepId { get; set; }
+        public Tep Tep { get; set; }
     }
 }

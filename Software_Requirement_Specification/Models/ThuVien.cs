@@ -10,8 +10,10 @@ namespace Software_Requirement_Specification.Models
     {
         [Key]
         public int Id { get; set; }
-        public int TruongHocId { get; set; }
-        public TruongHoc TruongHoc { get; set; }
+        public string MaTruongHoc { get; set; }
+        public string TenTruongHoc { get; set; }
+        public string HieuTruong { get; set; }
+        public string Website { get; set; }
         public string TenHeThong { get; set; }
         public string DiaChiTruyCap { get; set; }
         public string SoDienThoai { get; set; }

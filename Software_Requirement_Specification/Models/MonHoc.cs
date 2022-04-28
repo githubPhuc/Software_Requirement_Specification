@@ -17,9 +17,10 @@ namespace Software_Requirement_Specification.Models
         public NguoiDung nguoiDung { get; set; }
         public string TenMonHoc { get; set; }
         public string MoTa { get; set; }//mô tả về môn học 
+        public int BoMonId { get; set; }
+        public BoMon boMon { get; set; }
         public int idLopHoc { get; set; }
         public LopHoc lopHocId { get; set; }
-        public VaiTro vaiTro { get; set; }
         public bool TinhTrang { get; set; }
         public List<TaiLieu> taiLieus { get; set; }
         public List<DeThi> deThis { get; set; }

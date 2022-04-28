@@ -12,47 +12,48 @@ namespace Software_Requirement_Specification.Areas.API.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TaiLieuxController : ControllerBase
+    public class ThongBaosController : ControllerBase
     {
         private readonly Software_Requirement_SpecificationContext _context;
 
-        public TaiLieuxController(Software_Requirement_SpecificationContext context)
+        public ThongBaosController(Software_Requirement_SpecificationContext context)
         {
             _context = context;
         }
 
-        // GET: api/TaiLieux
+        // GET: api/ThongBaos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaiLieu>>> GetTaiLieu()
+        public async Task<ActionResult<IEnumerable<ThongBao>>> GetThongBao()
         {
-            return await _context.TaiLieu.ToListAsync();
+            return await _context.ThongBao.ToListAsync();
         }
+       
 
-        // GET: api/TaiLieux/5
+        // GET: api/ThongBaos/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TaiLieu>> GetTaiLieu(int id)
+        public async Task<ActionResult<ThongBao>> GetThongBao(int id)
         {
-            var taiLieu = await _context.TaiLieu.FindAsync(id);
+            var thongBao = await _context.ThongBao.FindAsync(id);
 
-            if (taiLieu == null)
+            if (thongBao == null)
             {
                 return NotFound();
             }
 
-            return taiLieu;
+            return thongBao;
         }
 
-        // PUT: api/TaiLieux/5
+        // PUT: api/ThongBaos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTaiLieu(int id, TaiLieu taiLieu)
+        public async Task<IActionResult> PutThongBao(int id, ThongBao thongBao)
         {
-            if (id != taiLieu.Id)
+            if (id != thongBao.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(taiLieu).State = EntityState.Modified;
+            _context.Entry(thongBao).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +61,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TaiLieuExists(id))
+                if (!ThongBaoExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +74,36 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             return NoContent();
         }
 
-        // POST: api/TaiLieux
+        // POST: api/ThongBaos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TaiLieu>> PostTaiLieu(TaiLieu taiLieu)
+        public async Task<ActionResult<ThongBao>> PostThongBao(ThongBao thongBao)
         {
-            _context.TaiLieu.Add(taiLieu);
+            _context.ThongBao.Add(thongBao);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTaiLieu", new { id = taiLieu.Id }, taiLieu);
+            return CreatedAtAction("GetThongBao", new { id = thongBao.Id }, thongBao);
         }
 
-        // DELETE: api/TaiLieux/5
+        // DELETE: api/ThongBaos/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTaiLieu(int id)
+        public async Task<IActionResult> DeleteThongBao(int id)
         {
-            var taiLieu = await _context.TaiLieu.FindAsync(id);
-            if (taiLieu == null)
+            var thongBao = await _context.ThongBao.FindAsync(id);
+            if (thongBao == null)
             {
                 return NotFound();
             }
 
-            _context.TaiLieu.Remove(taiLieu);
+            _context.ThongBao.Remove(thongBao);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TaiLieuExists(int id)
+        private bool ThongBaoExists(int id)
         {
-            return _context.TaiLieu.Any(e => e.Id == id);
+            return _context.ThongBao.Any(e => e.Id == id);
         }
     }
 }

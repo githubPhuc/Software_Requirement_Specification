@@ -12,9 +12,10 @@ namespace Software_Requirement_Specification.Models
         [Key]
         public int Id { get; set; }
         public string TenLop { get; set; }
+        public int loaiId { get; set; }
+        public LoaiLopHoc loaiLopHoc { get; set; }
         public string NienKhoa { get; set; }
-        public int idtruong { get; set; }
-        public TruongHoc TruongID { get; set; }
         public List<MonHoc> monHocs { get; set; }
+        public List<ThongBao> thongBaos { get; set; }
     }
 }
