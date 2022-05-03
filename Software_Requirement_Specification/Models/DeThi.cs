@@ -20,6 +20,8 @@ namespace Software_Requirement_Specification.Models
         public string HinhThuc { get; set; }
         public int NguoiDungId { get; set; }
         public NguoiDung NguoiDung { get; set; }
+        public int idLopHoc { get; set; }
+        public LopHoc lopHoc { get; set; }
         [Display(Name = "Thời Lượng thi")]
         public int ThoiLuong { get; set; }
         [Display(Name = "Ngày Tạo")]
@@ -34,5 +36,6 @@ namespace Software_Requirement_Specification.Models
         public string GhiChu { get; set; }
         public int TepId { get; set; }
         public Tep Tep { get; set; }
+        public List<cauhoidapan> cauhoidapans { get; set; }
     }
 }

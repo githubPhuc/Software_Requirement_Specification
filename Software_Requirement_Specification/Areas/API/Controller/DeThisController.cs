@@ -65,7 +65,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         }
         [HttpGet]
         [Route("searchtheoten/{data}")]
-        public async Task<ActionResult<IEnumerable<DeThi>>> searchDeThiTenDeThi(string data)
+        public async Task<ActionResult<IEnumerable<DeThi>>> searchDeThiTenDeThi(string data)//tìm theo tên
         {
 
             if (string.IsNullOrEmpty(data))
@@ -96,6 +96,34 @@ namespace Software_Requirement_Specification.Areas.API.Controller
                 var result = (from a in _context.DeThi
                               join b in _context.MonHoc on a.idMonHoc equals b.Id
                               where b.BoMonId == bomon
+                              select new
+                              {
+                                  LoaiFile = a.Tep.TheLoai,
+                                  TenDeThi = a.tendethi,
+                                  ThoiLuong = a.ThoiLuong,
+                                  ThoiGianTao = a.NgayTao,
+                                  TinhTrang = a.TinhTrang
+                              }).ToList();
+
+                return Ok(result);
+
+            }
+
+        }
+        [HttpGet]
+        [Route("timdethitheolop")]
+        public async Task<ActionResult<IEnumerable<DeThi>>> searchDeThitheolop(string name)
+        {
+
+            if (string.IsNullOrEmpty(name))
+            {
+                return NotFound();
+            }
+            else
+            {
+                var result = (from a in _context.DeThi
+                              join b in _context.LopHoc on a.idLopHoc equals b.Id
+                              where b.TenLop.Contains(name)
                               select new
                               {
                                   LoaiFile = a.Tep.TheLoai,
@@ -168,20 +196,6 @@ namespace Software_Requirement_Specification.Areas.API.Controller
 
             return Ok(data);
         }
-
-        //GET: api/DeThis/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<DeThi>> GetDeThi(int id)
-        //{
-        //    var deThi = await _context.DeThi.FindAsync(id);
-
-        //    if (deThi == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return deThi;
-        //}
 
         // PUT: api/DeThis/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

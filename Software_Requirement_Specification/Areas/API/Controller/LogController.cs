@@ -23,47 +23,48 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             _context = context;
         }
         // GET: api/<LogController>
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<TaiKhoan>>> login(string taikhoan, string matkhau)
-        //public string login(string taikhoan, string matkhau)
-        //{
-        //    var db = _context.TaiKhoan.Where(a => a.TenNguoiDung.Equals(taikhoan) && a.MatKhau.Equals(matkhau)).ToList();
-        //    if (db.Count() > 0)
-        //    {
-        //        var quyen = _context.PhanQuyen.Where(d => d.Id.Equals(db[0].idQuyen)).FirstOrDefault();
-
-        //        HttpContext.Session.SetString("tenDangnhap", db.FirstOrDefault().TenNguoiDung);
-        //        HttpContext.Session.SetInt32("id", db.FirstOrDefault().Id);
-        //        if (db[0].idQuyen == 1)
-        //        {
-        //            string name = db[0].TenNguoiDung;
-        //            name = name + " đăng nhập thành công với quyền " + quyen.TenQuyen;
-        //            return name;
-        //        }
-        //        if (db[0].idQuyen == 2)
-        //        {
-        //            string name = db[0].TenNguoiDung;
-        //            name = name + " đăng nhập thành công với quyền " + quyen.TenQuyen;
-        //            return name;
-        //        }
-        //        if (db[0].idQuyen == 3)
-        //        {
-        //            string name = db[0].TenNguoiDung;
-        //            name = name + " đăng nhập thành công với quyền " + quyen.TenQuyen;
-        //            return name;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        var url = Url.RouteUrl("areas", new { controller = "sanphams", action = "index", area = "Admin" });
-        //        return Redirect(url);
-
-        //    }
-        //    return "Đăng nhập thất bại chuyển sang lấy lại mật khẩu";
-
-        //}
         [HttpGet]
-        [Route("/dangxuat")]
+        //public async Task<ActionResult<IEnumerable<TaiKhoan>>> login(string taikhoan, string matkhau)
+        [Route("dangnhap")]
+        public string login(string taikhoan, string matkhau)
+        {
+            var db = _context.TaiKhoan.Where(a => a.TenNguoiDung.Equals(taikhoan) && a.MatKhau.Equals(matkhau)).ToList();
+            if (db.Count() > 0)
+            {
+                var quyen = _context.PhanQuyen.Where(d => d.Id.Equals(db[0].idQuyen)).FirstOrDefault();
+
+                HttpContext.Session.SetString("tenDangnhap", db.FirstOrDefault().TenNguoiDung);
+                HttpContext.Session.SetInt32("id", db.FirstOrDefault().Id);
+                if (db[0].idQuyen == 1)
+                {
+                    string name = db[0].TenNguoiDung;
+                    name = name + " đăng nhập thành công với quyền " + quyen.TenQuyen;
+                    return name;
+                }
+                if (db[0].idQuyen == 2)
+                {
+                    string name = db[0].TenNguoiDung;
+                    name = name + " đăng nhập thành công với quyền " + quyen.TenQuyen;
+                    return name;
+                }
+                if (db[0].idQuyen == 3)
+                {
+                    string name = db[0].TenNguoiDung;
+                    name = name + " đăng nhập thành công với quyền " + quyen.TenQuyen;
+                    return name;
+                }
+            }
+            //else
+            //{
+            //    var url = Url.RouteUrl("areas", new { controller = "sanphams", action = "index", area = "Admin" });
+            //    return Redirect(url);
+
+            //}
+            return "Đăng nhập thất bại chuyển sang lấy lại mật khẩu";
+
+        }
+        [HttpGet]
+        [Route("dangxuat")]
         public async Task<string> dangxuat()
         {
             HttpContext.Session.Clear();

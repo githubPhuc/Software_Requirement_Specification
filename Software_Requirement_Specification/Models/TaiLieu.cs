@@ -13,10 +13,14 @@ namespace Software_Requirement_Specification.Models
         //Khởi tạo 2:41 13/4/2022
         [Key]
         public int Id { get; set; }
+        public string tentailieu { get; set; }
         public int monhocId { get; set; }
         public MonHoc monHoc { get; set; }
-        public int SoTaiLieuChoDuyet { get; set; }
+        [Display(Name = "Phê duyệt")]
+        public bool PheDuyet { get; set; }
         public DateTime NgayGuiPheDuyet { get; set; }
+        public int idNguoiDung { get; set; }
+        public NguoiDung nguoiDung { get; set; }
         public bool TinhTrang { get; set; }
         public List<Tep> tep { get; set; }
     }

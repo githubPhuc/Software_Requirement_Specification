@@ -25,9 +25,42 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TaiLieu>>> GetTaiLieu()
         {
-            return await _context.TaiLieu.ToListAsync();
+            return await _context.TaiLieu.Where(a=>a.TinhTrang==true).ToListAsync();
         }
+        [HttpPut]
+        [Route("pheduyettailieumonhoc/{id}")]
+        public async Task<ActionResult<IEnumerable<TaiLieu>>> pheduyettailieu(int id)
+        {
+            var taiLieu = await _context.TaiLieu.FindAsync(id);
 
+            if (taiLieu == null)
+            {
+                return NotFound();
+            }
+            taiLieu.PheDuyet = true;
+            _context.Update(taiLieu);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetTaiLieu", new { id = taiLieu.Id }, taiLieu);
+
+        }
+        [HttpPut]
+        [Route("huytailieu/{id}")]
+        public async Task<ActionResult<IEnumerable<TaiLieu>>> huytailieu(int id)
+        {
+            var taiLieu = await _context.TaiLieu.FindAsync(id);
+
+            if (taiLieu == null)
+            {
+                return NotFound();
+            }
+            taiLieu.TinhTrang = false;
+            _context.Update(taiLieu);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetTaiLieu", new { id = taiLieu.Id }, taiLieu);
+
+        }
         // GET: api/TaiLieux/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TaiLieu>> GetTaiLieu(int id)

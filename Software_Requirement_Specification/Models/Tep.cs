@@ -16,10 +16,8 @@ namespace Software_Requirement_Specification.Models
         public string TheLoai { get; set; }
         public int NguoiChinhSua { get; set; }
         public DateTime NgaySuaCuoi { get; set; }
-        public string File { get; set; }
         public int KichThuoc { get; set; }
-        [NotMapped]
-        public IFormFile FileTep { get; set; }
+        public int idTaiLieu { get; set; }
         public TaiLieu TaiLieu { get; set; }
         public DeThi DeThi { get; set; }
     }
