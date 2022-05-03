@@ -16,6 +16,6 @@ namespace Software_Requirement_Specification.Models
         public LoaiLopHoc loaiLopHoc { get; set; }
         public string NienKhoa { get; set; }
         public List<MonHoc> monHocs { get; set; }
-        public List<ThongBao> thongBaos { get; set; }
+        public List<DeThi> deThis { get; set; }
     }
 }

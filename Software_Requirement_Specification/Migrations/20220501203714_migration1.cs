@@ -296,11 +296,13 @@ namespace Software_Requirement_Specification.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    tentailieu = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     monhocId = table.Column<int>(type: "int", nullable: false),
-                    SoTaiLieuChoDuyet = table.Column<int>(type: "int", nullable: false),
+                    PheDuyet = table.Column<bool>(type: "bit", nullable: false),
                     NgayGuiPheDuyet = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TinhTrang = table.Column<bool>(type: "bit", nullable: false),
-                    NguoiDungId = table.Column<int>(type: "int", nullable: true)
+                    idNguoiDung = table.Column<int>(type: "int", nullable: false),
+                    nguoiDungId = table.Column<int>(type: "int", nullable: true),
+                    TinhTrang = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -312,8 +314,8 @@ namespace Software_Requirement_Specification.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TaiLieu_NguoiDung_NguoiDungId",
-                        column: x => x.NguoiDungId,
+                        name: "FK_TaiLieu_NguoiDung_nguoiDungId",
+                        column: x => x.nguoiDungId,
                         principalTable: "NguoiDung",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -329,8 +331,8 @@ namespace Software_Requirement_Specification.Migrations
                     TheLoai = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NguoiChinhSua = table.Column<int>(type: "int", nullable: false),
                     NgaySuaCuoi = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    File = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     KichThuoc = table.Column<int>(type: "int", nullable: false),
+                    idTaiLieu = table.Column<int>(type: "int", nullable: false),
                     TaiLieuId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -355,6 +357,8 @@ namespace Software_Requirement_Specification.Migrations
                     monHocIdId = table.Column<int>(type: "int", nullable: true),
                     HinhThuc = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NguoiDungId = table.Column<int>(type: "int", nullable: false),
+                    idLopHoc = table.Column<int>(type: "int", nullable: false),
+                    lopHocId = table.Column<int>(type: "int", nullable: true),
                     ThoiLuong = table.Column<int>(type: "int", nullable: false),
                     NgayTao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TinhTrang = table.Column<bool>(type: "bit", nullable: false),
@@ -366,6 +370,12 @@ namespace Software_Requirement_Specification.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DeThi", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DeThi_LopHoc_lopHocId",
+                        column: x => x.lopHocId,
+                        principalTable: "LopHoc",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_DeThi_MonHoc_monHocIdId",
                         column: x => x.monHocIdId,
@@ -395,6 +405,11 @@ namespace Software_Requirement_Specification.Migrations
                 name: "IX_BaiGiang_NguoiDungId",
                 table: "BaiGiang",
                 column: "NguoiDungId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DeThi_lopHocId",
+                table: "DeThi",
+                column: "lopHocId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DeThi_monHocIdId",
@@ -458,9 +473,9 @@ namespace Software_Requirement_Specification.Migrations
                 column: "monhocId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TaiLieu_NguoiDungId",
+                name: "IX_TaiLieu_nguoiDungId",
                 table: "TaiLieu",
-                column: "NguoiDungId");
+                column: "nguoiDungId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tep_TaiLieuId",

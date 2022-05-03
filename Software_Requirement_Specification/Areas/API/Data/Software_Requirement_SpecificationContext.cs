@@ -53,5 +53,8 @@ namespace Software_Requirement_Specification.Data
 
        
         public DbSet<Software_Requirement_Specification.Models.BoMon> BoMon { get; set; }
+
+       
+        public DbSet<Software_Requirement_Specification.Models.cauhoidapan> cauhoidapan { get; set; }
     }
 }

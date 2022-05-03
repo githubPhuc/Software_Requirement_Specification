@@ -10,7 +10,7 @@ using Software_Requirement_Specification.Data;
 namespace Software_Requirement_Specification.Migrations
 {
     [DbContext(typeof(Software_Requirement_SpecificationContext))]
-    [Migration("20220428081934_migration1")]
+    [Migration("20220501203714_migration1")]
     partial class migration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -110,7 +110,13 @@ namespace Software_Requirement_Specification.Migrations
                     b.Property<bool>("TinhTrang")
                         .HasColumnType("bit");
 
+                    b.Property<int>("idLopHoc")
+                        .HasColumnType("int");
+
                     b.Property<int>("idMonHoc")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("lopHocId")
                         .HasColumnType("int");
 
                     b.Property<int?>("monHocIdId")
@@ -125,6 +131,8 @@ namespace Software_Requirement_Specification.Migrations
 
                     b.HasIndex("TepId")
                         .IsUnique();
+
+                    b.HasIndex("lopHocId");
 
                     b.HasIndex("monHocIdId");
 
@@ -313,23 +321,29 @@ namespace Software_Requirement_Specification.Migrations
                     b.Property<DateTime>("NgayGuiPheDuyet")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("NguoiDungId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SoTaiLieuChoDuyet")
-                        .HasColumnType("int");
+                    b.Property<bool>("PheDuyet")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("TinhTrang")
                         .HasColumnType("bit");
 
+                    b.Property<int>("idNguoiDung")
+                        .HasColumnType("int");
+
                     b.Property<int>("monhocId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("nguoiDungId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("tentailieu")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("NguoiDungId");
-
                     b.HasIndex("monhocId");
+
+                    b.HasIndex("nguoiDungId");
 
                     b.ToTable("TaiLieu");
                 });
@@ -340,9 +354,6 @@ namespace Software_Requirement_Specification.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("File")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("KichThuoc")
                         .HasColumnType("int");
@@ -361,6 +372,9 @@ namespace Software_Requirement_Specification.Migrations
 
                     b.Property<string>("TheLoai")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("idTaiLieu")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -518,9 +532,15 @@ namespace Software_Requirement_Specification.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Software_Requirement_Specification.Models.LopHoc", "lopHoc")
+                        .WithMany("deThis")
+                        .HasForeignKey("lopHocId");
+
                     b.HasOne("Software_Requirement_Specification.Models.MonHoc", "monHocId")
                         .WithMany("deThis")
                         .HasForeignKey("monHocIdId");
+
+                    b.Navigation("lopHoc");
 
                     b.Navigation("monHocId");
 
@@ -599,17 +619,19 @@ namespace Software_Requirement_Specification.Migrations
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.TaiLieu", b =>
                 {
-                    b.HasOne("Software_Requirement_Specification.Models.NguoiDung", null)
-                        .WithMany("TaiLieu")
-                        .HasForeignKey("NguoiDungId");
-
                     b.HasOne("Software_Requirement_Specification.Models.MonHoc", "monHoc")
                         .WithMany("taiLieus")
                         .HasForeignKey("monhocId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Software_Requirement_Specification.Models.NguoiDung", "nguoiDung")
+                        .WithMany("TaiLieu")
+                        .HasForeignKey("nguoiDungId");
+
                     b.Navigation("monHoc");
+
+                    b.Navigation("nguoiDung");
                 });
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.Tep", b =>
@@ -669,6 +691,8 @@ namespace Software_Requirement_Specification.Migrations
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.LopHoc", b =>
                 {
+                    b.Navigation("deThis");
+
                     b.Navigation("monHocs");
 
                     b.Navigation("thongBaos");

@@ -40,17 +40,31 @@ namespace Software_Requirement_Specification.Areas.API.Controller
                         {
                             b.Id,
                             b.TenMonHoc,
+                            sotailieuchoduyet = (_context.TaiLieu.Where(x => x.PheDuyet == false)).Count(),
                             a.Ten,
                             c.TinhTrang,
                             c.NgayGuiPheDuyet
-                        });
+                        }) ;
             return Ok(data);
         }
         [HttpGet]
         [Route("timkiemmonhoc/{data}")]
-        public async Task<ActionResult<IEnumerable<MonHoc>>> SearchMonHoc(string data)
+        public async Task<ActionResult<IEnumerable<MonHoc>>> SearchMonHoc(string data)//Tên môn học
         {
             var monHoc = await _context.MonHoc.Where(m => m.TenMonHoc.Contains(data)).ToListAsync();
+
+            if (monHoc == null)
+            {
+                return NotFound();
+            }
+
+            return monHoc;
+        }
+        [HttpGet]
+        [Route("timkiemmonhoctheolop/{data}")]
+        public async Task<ActionResult<IEnumerable<MonHoc>>> SearchMonHoctheolop(string data)//Tên môn học
+        {
+            var monHoc = await _context.MonHoc.Where(m => m.lopHocId.TenLop.Contains(data)).ToListAsync();
 
             if (monHoc == null)
             {
@@ -76,20 +90,21 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             return Ok(data);
 
         }
+       
 
         // GET: api/MonHocs/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<MonHoc>> GetMonHoc(int id)
-        //{
-        //    var monHoc = await _context.MonHoc.FindAsync(id);
+        [HttpGet("{id}")]
+        public async Task<ActionResult<MonHoc>> GetMonHoc(int id)
+        {
+            var monHoc = await _context.MonHoc.FindAsync(id);
 
-        //    if (monHoc == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (monHoc == null)
+            {
+                return NotFound();
+            }
 
-        //    return monHoc;
-        //}
+            return monHoc;
+        }
 
         // PUT: api/MonHocs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
