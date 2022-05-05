@@ -26,9 +26,6 @@ namespace Software_Requirement_Specification.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("KichThuoc")
-                        .HasColumnType("int");
-
                     b.Property<int>("MonHocId")
                         .HasColumnType("int");
 
@@ -44,17 +41,22 @@ namespace Software_Requirement_Specification.Migrations
                     b.Property<bool>("PheDuyet")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Ten")
+                    b.Property<int>("idTep")
+                        .HasColumnType("int");
+
+                    b.Property<string>("tenBaiGiang")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TheLoai")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("tepId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MonHocId");
 
                     b.HasIndex("NguoiDungId");
+
+                    b.HasIndex("tepId");
 
                     b.ToTable("BaiGiang");
                 });
@@ -391,17 +393,8 @@ namespace Software_Requirement_Specification.Migrations
                     b.Property<string>("ChuDe")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LoaiLopHocId")
-                        .HasColumnType("int");
-
                     b.Property<string>("LoaiThongBao")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LopHocId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NguoiDungId")
-                        .HasColumnType("int");
 
                     b.Property<string>("NoiDung")
                         .HasColumnType("nvarchar(max)");
@@ -409,13 +402,15 @@ namespace Software_Requirement_Specification.Migrations
                     b.Property<DateTime>("ThoiGian")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("idQuyen")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("phanQuyenId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("LoaiLopHocId");
-
-                    b.HasIndex("LopHocId");
-
-                    b.HasIndex("NguoiDungId");
+                    b.HasIndex("phanQuyenId");
 
                     b.ToTable("ThongBao");
                 });
@@ -548,13 +543,17 @@ namespace Software_Requirement_Specification.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Software_Requirement_Specification.Models.NguoiDung", "NguoiDung")
+                    b.HasOne("Software_Requirement_Specification.Models.NguoiDung", null)
                         .WithMany("BaiGiang")
                         .HasForeignKey("NguoiDungId");
 
+                    b.HasOne("Software_Requirement_Specification.Models.Tep", "tep")
+                        .WithMany()
+                        .HasForeignKey("tepId");
+
                     b.Navigation("MonHoc");
 
-                    b.Navigation("NguoiDung");
+                    b.Navigation("tep");
                 });
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.DeThi", b =>
@@ -684,25 +683,11 @@ namespace Software_Requirement_Specification.Migrations
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.ThongBao", b =>
                 {
-                    b.HasOne("Software_Requirement_Specification.Models.LoaiLopHoc", "loaiLopHoc")
-                        .WithMany("thongBaos")
-                        .HasForeignKey("LoaiLopHocId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Software_Requirement_Specification.Models.LopHoc", null)
-                        .WithMany("thongBaos")
-                        .HasForeignKey("LopHocId");
-
-                    b.HasOne("Software_Requirement_Specification.Models.NguoiDung", "nguoiDung")
+                    b.HasOne("Software_Requirement_Specification.Models.PhanQuyen", "phanQuyen")
                         .WithMany()
-                        .HasForeignKey("NguoiDungId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("phanQuyenId");
 
-                    b.Navigation("loaiLopHoc");
-
-                    b.Navigation("nguoiDung");
+                    b.Navigation("phanQuyen");
                 });
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.VaiTro", b =>
@@ -737,18 +722,11 @@ namespace Software_Requirement_Specification.Migrations
                     b.Navigation("cauhoidapans");
                 });
 
-            modelBuilder.Entity("Software_Requirement_Specification.Models.LoaiLopHoc", b =>
-                {
-                    b.Navigation("thongBaos");
-                });
-
             modelBuilder.Entity("Software_Requirement_Specification.Models.LopHoc", b =>
                 {
                     b.Navigation("deThis");
 
                     b.Navigation("monHocs");
-
-                    b.Navigation("thongBaos");
                 });
 
             modelBuilder.Entity("Software_Requirement_Specification.Models.MonHoc", b =>

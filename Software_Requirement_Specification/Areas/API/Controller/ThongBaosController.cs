@@ -30,17 +30,18 @@ namespace Software_Requirement_Specification.Areas.API.Controller
        
 
         // GET: api/ThongBaos/5
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("xemthongbaotheoquyen")]
         public async Task<ActionResult<ThongBao>> GetThongBao(int id)
         {
-            var thongBao = await _context.ThongBao.FindAsync(id);
+            var thongBao = await _context.ThongBao.Where(a=>a.idQuyen==id).ToListAsync();
 
             if (thongBao == null)
             {
                 return NotFound();
             }
 
-            return thongBao;
+            return Ok(thongBao);
         }
 
         // PUT: api/ThongBaos/5

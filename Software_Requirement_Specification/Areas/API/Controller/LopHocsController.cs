@@ -78,6 +78,10 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         [HttpPost]
         public async Task<ActionResult<LopHoc>> PostLopHoc([FromBody] LopHoc lopHoc)
         {
+            ThongBao thongBao = new ThongBao();
+            thongBao.ChuDe = "Thông báo Hệ thống";
+            thongBao.NoiDung = "Admin đả thêm lớp học" + _context.LopHoc.Where(a => a.Id == lopHoc.Id).FirstOrDefault().TenLop;
+            _context.Add(thongBao);
             _context.LopHoc.Add(lopHoc);
             await _context.SaveChangesAsync();
 

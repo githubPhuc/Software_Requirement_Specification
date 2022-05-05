@@ -39,6 +39,13 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             }
             taiLieu.PheDuyet = true;
             _context.Update(taiLieu);
+            ThongBao thongBao = new ThongBao();
+            thongBao.idQuyen = 2;
+            thongBao.LoaiThongBao = "Thông báo người dùng";
+            thongBao.ChuDe = "Thông báo học sinh";
+            thongBao.NoiDung = "Tài Liệu " + taiLieu.tentailieu + " đả được duyệt";
+            thongBao.ThoiGian = DateTime.Now;
+            _context.Add(thongBao);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetTaiLieu", new { id = taiLieu.Id }, taiLieu);
