@@ -11,10 +11,8 @@ namespace Software_Requirement_Specification.Models
         [Key]
         public int Id { get; set; }
         public string LoaiThongBao { get; set; }
-        public int LoaiLopHocId { get; set; }
-        public LoaiLopHoc loaiLopHoc { get; set; }
-        public int NguoiDungId { get; set; }
-        public NguoiDung nguoiDung { get; set; }
+        public int idQuyen { get; set; }
+        public PhanQuyen phanQuyen { get; set; }
         public string ChuDe { get; set; }
         public string NoiDung { get; set; }
         public DateTime ThoiGian { get; set; }

@@ -38,6 +38,13 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             {
                 return NotFound();
             }
+            ThongBao thongBao = new ThongBao();
+            thongBao.idQuyen = 1;
+            thongBao.LoaiThongBao = "Thông báo người dùng";
+            thongBao.ChuDe = "Thông báo đề thi";
+            thongBao.NoiDung ="Đề thi "+deThi.tendethi+" đả được duyệt" ;
+            thongBao.ThoiGian = DateTime.Now;
+            _context.Add(thongBao);
             deThi.PheDuyet = true;
             deThi.NguoiPheDuyet = Convert.ToInt32(HttpContext.Session.GetString("Id"));
             _context.Update(deThi);
@@ -56,6 +63,11 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             {
                 return NotFound();
             }
+            ThongBao thongBao = new ThongBao();
+            thongBao.ChuDe = "Thông báo người dùng";
+            thongBao.NoiDung = "Đề thi '" + _context.DeThi.Where(a => a.Id == id).FirstOrDefault().tendethi +"' đả bị hủy";
+            thongBao.ThoiGian = DateTime.Now;
+            _context.Add(thongBao);
             deThi.PheDuyet = false;
             deThi.NguoiPheDuyet = Convert.ToInt32(HttpContext.Session.GetString("Id"));
             _context.Update(deThi);
@@ -234,10 +246,18 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         public async Task<ActionResult<DeThi>> PostDeThi([FromBody] DeThi deThi)
         {
 
-            _context.DeThi.Add(deThi);
+            
             deThi.PheDuyet = false;
             deThi.NguoiPheDuyet = 1;
             deThi.NgayTao = DateTime.Now;
+            ThongBao thongBao = new ThongBao();
+            thongBao.idQuyen = 2;
+            thongBao.LoaiThongBao = "Thông báo người dùng";
+            thongBao.ChuDe = "Thông báo học sinh";
+            thongBao.NoiDung = "Đề thi "+deThi.tendethi+" đả được thêm mới" ;
+            thongBao.ThoiGian = DateTime.Now;
+            _context.DeThi.Add(deThi);
+            _context.Add(thongBao);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetDeThi", new { id = deThi.Id }, deThi);
@@ -252,7 +272,13 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             {
                 return NotFound();
             }
-
+            ThongBao thongBao = new ThongBao();
+            thongBao.idQuyen = 2;
+            thongBao.LoaiThongBao = "Thông báo người dùng";
+            thongBao.ChuDe = "Thông báo học sinh";
+            thongBao.NoiDung = "Đề thi " + deThi.tendethi + " đả được xóa";
+            thongBao.ThoiGian = DateTime.Now;
+            _context.Add(thongBao);
             _context.DeThi.Remove(deThi);
             await _context.SaveChangesAsync();
 

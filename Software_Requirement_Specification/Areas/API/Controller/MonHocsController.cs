@@ -90,7 +90,46 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             return Ok(data);
 
         }
-       
+        [HttpPut]
+        [Route("thembaigiangvaomonhoc")]
+        public async Task<IActionResult> thembaigiangvaomonhoc(int id, int idmh)
+        {
+            if(id==null)
+            {
+                return Content(" chưa nhập id");
+            }
+            else
+            {
+                ThongBao thongBao = new ThongBao();
+                thongBao.idQuyen = 2;
+                thongBao.LoaiThongBao = "Thông báo người dùng";
+                thongBao.ChuDe = "Thông báo học sinh";
+                thongBao.NoiDung = "Bài giảng đả được thêm vào Môn học" + _context.MonHoc.Where(a => a.Id == id).FirstOrDefault().TenMonHoc;
+                thongBao.ThoiGian = DateTime.Now;
+                _context.Add(thongBao);
+                var baigiang = await _context.BaiGiang.FindAsync(id);
+                baigiang.MonHocId = idmh;
+                _context.BaiGiang.Update(baigiang);
+                await _context.SaveChangesAsync();
+                return Content("Thêm bài giảng vào mon học thành công");
+            }
+        }
+        [HttpGet]
+        [Route("xembaigiangtheoidmonhoc")]
+        public async Task<IActionResult> xembaigiangtheomonhoc(int id )
+        {
+            if (id == null)
+            {
+                return Content(" chưa nhập id");
+            }
+            else
+            {
+                var baigiang = await _context.BaiGiang.Where(a=>a.MonHocId==id).ToListAsync();
+                
+                return Ok(baigiang);
+            }
+        }
+
 
         // GET: api/MonHocs/5
         [HttpGet("{id}")]
@@ -142,6 +181,13 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         [HttpPost]
         public async Task<ActionResult<MonHoc>> PostMonHoc([FromBody] MonHoc monHoc)
         {
+            ThongBao thongBao = new ThongBao();
+            thongBao.idQuyen = 2;
+            thongBao.LoaiThongBao = "Thông báo người dùng";
+            thongBao.ChuDe = "Thông báo học sinh";
+            thongBao.NoiDung = "Môn học " + monHoc.TenMonHoc +" đả được tạo";
+            thongBao.ThoiGian = DateTime.Now;
+            _context.Add(thongBao);
             _context.MonHoc.Add(monHoc);
             await _context.SaveChangesAsync();
 

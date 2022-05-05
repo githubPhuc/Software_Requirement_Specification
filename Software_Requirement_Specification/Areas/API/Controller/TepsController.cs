@@ -18,7 +18,7 @@ namespace Software_Requirement_Specification.Areas.API.Controller
     public class TepsController : ControllerBase
     {
         private readonly Software_Requirement_SpecificationContext _context;
-        private readonly IWebHostEnvironment _webHostEnvironment; 
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private IHostingEnvironment Environment;
         public TepsController(Software_Requirement_SpecificationContext context, IWebHostEnvironment webHostEnvironment, IHostingEnvironment _environment)
         {
@@ -127,6 +127,8 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         {
             if (ModelState.IsValid)
             {
+                ThongBao thongBao = new ThongBao();
+                string name = "";
                 _context.Tep.Add(tep);
                 await _context.SaveChangesAsync();
                 if (formFile != null)
@@ -141,39 +143,83 @@ namespace Software_Requirement_Specification.Areas.API.Controller
                     }
                     tep.TheLoai = extens;
                     tep.TenTep = formFile.FileName;
+                    name = tep.TenTep;
                     tep.KichThuoc = Convert.ToInt32(formFile.Length);
                     tep.NgaySuaCuoi = DateTime.Now;
-                    tep.NguoiChinhSua = 1;
                     _context.Tep.Update(tep);
                     await _context.SaveChangesAsync();
                 }
+                thongBao.idQuyen = 1;
+                thongBao.LoaiThongBao = "Thông báo người dùng";
+                thongBao.ChuDe = "Thông báo Tệp";
+                thongBao.NoiDung = name + " Đả được thêm " ;
+                thongBao.ThoiGian = DateTime.Now;
+                _context.ThongBao.Add(thongBao);
                 return CreatedAtAction("GetTep", new { id = tep.Id }, tep);
             }
             return NoContent();
         }
-        //[HttpGet]
-        //[Route("Download")]
-        //public FileStreamResult DownloadFile(string fileName)
-        //{
-        //    //Determine the Content Type of the File.
-        //    string contentType = "";
-        //    new FileExtensionContentTypeProvider().TryGetContentType(fileName, out contentType);
 
-        //    //Build the File Path.
-        //    string path = Path.Combine(this.Environment.WebRootPath, "file/") + fileName;
+        [HttpGet]
+        [Route("Download")]
+        public async Task<FileStreamResult> DownloadFile(int id)
+        {
+            var data = await _context.Tep.FindAsync(id);
+            var context = data.TenTep;
+            if (context == null)
+            {
 
-        //    //Read the File data into FileStream.
-        //    FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+            }
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "file", context);
 
-        //    //Send the File to Download.
-        //    return new FileStreamResult(fileStream, contentType);
-        //}
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            return File(memory, GetContentType(path), Path.GetFileName(path));
+
+        }
+        [HttpPut]
+        [Route("renamefile")]
+        public async Task<IActionResult> reNameFile(int id, string tenFileMoi)
+        {
+            ThongBao thongBao = new ThongBao();
+            var tep = await _context.Tep.FindAsync(id);
+            string content = tep.TenTep;
+            string name="";
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "file");
+            if (tep.TheLoai == ".docx")
+            {
+                Directory.Move(path + "\\" + content, path + "\\" + tenFileMoi + tep.TheLoai);
+                tep.TenTep = tenFileMoi + tep.TheLoai;
+            }
+            else
+            {
+                name = tenFileMoi + "." + tep.TheLoai;
+                Directory.Move(path + "\\" + content, path + "\\" + name);
+                tep.TenTep = name;
+            }
+            tep.NguoiChinhSua = Convert.ToInt32(HttpContext.Session.GetString("Id"));
+            tep.NgaySuaCuoi = DateTime.Now;
+            _context.Update(tep);
+            thongBao.idQuyen = 1;
+            thongBao.LoaiThongBao = "Thông báo người dùng";
+            thongBao.ChuDe = "Thông báo Tệp";
+            thongBao.NoiDung = content + " Đả bị đổi tên thành " + name;
+            thongBao.ThoiGian = DateTime.Now;
+            _context.ThongBao.Add(thongBao);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("GetTep", new { id = tep.Id }, tep);
+        }
 
         // DELETE: api/Teps/5
         [HttpDelete("{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteTep(int id)
         {
+            ThongBao thongBao = new ThongBao();
             var tep = await _context.Tep.FindAsync(id);
             if (tep == null)
             {
@@ -182,15 +228,45 @@ namespace Software_Requirement_Specification.Areas.API.Controller
             var fileToDelete = Path.Combine(_webHostEnvironment.WebRootPath, "file",  tep.TenTep);
             FileInfo file = new FileInfo(fileToDelete);
             file.Delete();
+            thongBao.idQuyen = 1;
+            thongBao.LoaiThongBao = "Thông báo người dùng";
+            thongBao.ChuDe = "Thông báo Tệp";
+            thongBao.NoiDung = tep.TenTep+" đả bị xóa";
+            thongBao.ThoiGian = DateTime.Now;
+            _context.ThongBao.Add(thongBao);
             _context.Tep.Remove(tep);
+            _context.ThongBao.Add(thongBao);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Content("xóa thành công");
         }
 
         private bool TepExists(int id)
         {
             return _context.Tep.Any(e => e.Id == id);
+        }
+        private string GetContentType(string path)
+        {
+            var types = GetMimeTypes();
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return types[ext];
+        }
+        private Dictionary<string, string> GetMimeTypes()
+        {
+            return new Dictionary<string, string>
+            {
+                {".txt", "text/plain"},
+                {".pdf", "application/pdf"},
+                {".doc", "application/vnd.ms-word"},
+                {".docx", "application/vnd.ms-word"},
+                {".xls", "application/vnd.ms-excel"},
+                {".xlsx", "application/vnd.openxmlformatsofficedocument.spreadsheetml.sheet"},
+                {".png", "image/png"},
+                {".jpg", "image/jpeg"},
+                {".jpeg", "image/jpeg"},
+                {".gif", "image/gif"},
+                {".csv", "text/csv"}
+            };
         }
     }
 }

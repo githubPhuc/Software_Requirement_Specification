@@ -12,6 +12,6 @@ namespace Software_Requirement_Specification.Models
         public int id { get; set; }
         public string tenLoai { get; set; }
         public bool trangThai { get; set; }
-        public List<ThongBao> thongBaos { get; set; }
+        
     }
 }

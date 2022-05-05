@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +17,11 @@ namespace Software_Requirement_Specification.Areas.API.Controller
     public class BaiGiangsController : ControllerBase
     {
         private readonly Software_Requirement_SpecificationContext _context;
-
-        public BaiGiangsController(Software_Requirement_SpecificationContext context)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public BaiGiangsController(Software_Requirement_SpecificationContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: api/BaiGiangs
@@ -92,11 +95,47 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         // POST: api/BaiGiangs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<BaiGiang>> PostBaiGiang([FromBody] BaiGiang baiGiang)
+        [Route("thembaigiang")]
+        public async Task<ActionResult> PostBaiGiang( string tenbaigiang, int idmh, IFormFile formFile)
         {
-            _context.BaiGiang.Add(baiGiang);
-            await _context.SaveChangesAsync();
-
+            BaiGiang baiGiang = new BaiGiang();
+            ThongBao thongBao = new ThongBao();
+            Tep tep = new Tep();
+            if (ModelState.IsValid)
+            {
+                baiGiang.MonHocId = idmh;
+                _context.BaiGiang.Add(baiGiang);
+                await _context.SaveChangesAsync();
+                _context.Tep.Add(tep);
+                await _context.SaveChangesAsync();
+                if (formFile != null)
+                {
+                    var extens = Path.GetExtension(formFile.FileName);
+                    var uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, "file");
+                    var filePath = Path.Combine(uploadPath, formFile.FileName);
+                    using (FileStream fs = System.IO.File.Create(filePath))
+                    {
+                        formFile.CopyTo(fs);
+                        fs.Flush();
+                    }
+                    tep.TheLoai = extens;
+                    tep.TenTep = formFile.FileName;
+                    tep.KichThuoc = Convert.ToInt32(formFile.Length);
+                    tep.NgaySuaCuoi = DateTime.Now;
+                    _context.Tep.Update(tep);
+                    await _context.SaveChangesAsync();
+                }
+                baiGiang.idTep = tep.Id;
+                baiGiang.PheDuyet = false;
+                baiGiang.tenBaiGiang = tenbaigiang;
+                _context.Update(baiGiang);
+                thongBao.idQuyen = 2;
+                thongBao.ChuDe = "Thông báo người dùng";
+                thongBao.NoiDung = "Giáo viên đả thêm mới bài giảng "+ baiGiang.tenBaiGiang;
+                thongBao.ThoiGian = DateTime.Now;
+                _context.ThongBao.Add(thongBao);
+                await _context.SaveChangesAsync();
+            }
             return CreatedAtAction("GetBaiGiang", new { id = baiGiang.Id }, baiGiang);
         }
 
@@ -105,15 +144,37 @@ namespace Software_Requirement_Specification.Areas.API.Controller
         public async Task<IActionResult> DeleteBaiGiang(int id)
         {
             var baiGiang = await _context.BaiGiang.FindAsync(id);
-            if (baiGiang == null)
+            if (baiGiang != null)
             {
-                return NotFound();
+                int idbg = baiGiang.idTep;
+                var tep = await _context.Tep.FindAsync(idbg);
+                if (tep == null)
+                {
+                    return NotFound();
+                }
+                var fileToDelete = Path.Combine(_webHostEnvironment.WebRootPath, "file", tep.TenTep);
+                FileInfo file = new FileInfo(fileToDelete);
+                file.Delete();
+                string name = baiGiang.tenBaiGiang;
+                _context.Tep.Remove(tep);
+                _context.BaiGiang.Remove(baiGiang);
+                ThongBao thongBao = new ThongBao();
+                thongBao.idQuyen = 2;
+                thongBao.LoaiThongBao = "Thông báo người dùng";
+                thongBao.ChuDe = "Thông báo học sinh";
+                thongBao.NoiDung = "Bài giảng " + name + " đả được xóa";
+                thongBao.ThoiGian = DateTime.Now;
+                _context.Add(thongBao);
+                
+                await _context.SaveChangesAsync();
+                return Content("Xóa thành công");
+            }
+            else
+            {
+                return Content("không có bài giảng");
             }
 
-            _context.BaiGiang.Remove(baiGiang);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            
         }
 
         private bool BaiGiangExists(int id)

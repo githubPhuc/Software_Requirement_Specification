@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Software_Requirement_Specification.Data;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace Software_Requirement_Specification
 {
@@ -31,7 +33,10 @@ namespace Software_Requirement_Specification
             services.AddDbContext<Software_Requirement_SpecificationContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Software_Requirement_SpecificationContext")));
             services.ConfigureApplicationCookie(options => { options.LoginPath = "/Api/log"; });
-            
+            services.AddSingleton<IFileProvider>(
+            new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

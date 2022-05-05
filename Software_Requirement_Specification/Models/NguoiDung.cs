@@ -18,7 +18,6 @@ namespace Software_Requirement_Specification.Models
         public VaiTro VaiTro { get; set; }
         public int IdtaiKhoan { get; set; }
         public TaiKhoan TaiKhoan { get; set; }
-
         public List<TaiLieu> TaiLieu { get; set; }
         public List<BaiGiang> BaiGiang { get; set; }
         public List<DeThi> DeThi { get; set; }

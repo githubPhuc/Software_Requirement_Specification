@@ -22,7 +22,6 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\" />
     <Folder Include="Areas\API\Views\" />
-    <Folder Include="wwwroot\file\" />
   </ItemGroup>
 
 </Project>
